@@ -32,7 +32,20 @@ shinyServer(function(input, output) {
       case1$X <- as.Date(case1$X, format="%m/%d/%Y")
       filepop <- getURL(paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_population.csv",sep=""))
       pop <- read.csv(text = filepop, stringsAsFactors = F)
+      pop <- as.data.table(pop)
       
+      idx=1
+      for (colname in colnames(case1))
+      {
+        popcount <- pop[district==colname,pop]
+        if (length(popcount)>0)
+        {
+          popcount <- round(popcount / 1000,0)
+          newcolname <- paste(colname, " ", popcount, "K", sep="")
+          colnames(case1)[idx] <- newcolname
+        }
+        idx=idx+1
+      }
 
     if (is.na(casefinal))
     {
