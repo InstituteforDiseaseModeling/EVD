@@ -7,5 +7,5 @@ The data is from:
 https://github.com/InstituteforDiseaseModeling/EVD
 
 For now, the dashboard is available at:
-https://marspathfinder.shinyapps.io/ebola/
+https://institutefordiseasemodeling.shinyapps.io/dashboard/
 
