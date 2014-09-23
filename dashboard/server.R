@@ -12,24 +12,27 @@ shinyServer(function(input, output) {
       print(i)
     }
   })
-  output$map <- renderPlot({
-    countrylist=c("sierra_leone","guinee","liberia")
-    for (i in input$country)
-    {
-      filelocation <- paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_shapefile.csv",sep="")
-      download.file(filelocation, "district.shp")
-      shapes<-readShapeSpatial("district.shp",
-                             proj4string=CRS("+proj=longlat"))
-    }
-  })
+#   output$map <- renderPlot({
+#     countrylist=c("sierra_leone","guinee","liberia")
+#     for (i in input$country)
+#     {
+#       filelocation <- paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_shapefile.csv",sep="")
+#       download.file(filelocation, "district.shp")
+#       shapes<-readShapeSpatial("district.shp",
+#                              proj4string=CRS("+proj=longlat"))
+#     }
+#   })
   output$plots <- renderPlot({
     countrylist=c("sierra_leone","guinee","liberia")
     casefinal <- NA
     for (i in input$country)
     {
-      file1 <- paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_EVD_2014.csv",sep=""))
+      file1 <- paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_EVD_2014.csv",sep="")
       case1 <- read.csv(text = file1, stringsAsFactors = F)
       case1$X <- as.Date(case1$X, format="%m/%d/%Y")
+      filepop <- paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_population.csv",sep="")
+      pop <- read.csv(text = filepop, stringsAsFactors = F)
+
     if (is.na(casefinal))
     {
       casefinal <- case1
