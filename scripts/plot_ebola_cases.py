@@ -1,3 +1,5 @@
+import os
+import json
 import csv
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -10,7 +12,7 @@ def week_of_date(date_input):
 
 def read_case_counts(csv_file):
     case_counts={}
-    with open(csv_file,'rb') as f:
+    with open(os.path.join('..','data',csv_file),'rb') as f:
         reader=csv.reader(f)
         header=reader.next()
         fields=[f.replace("'","") for f in header]
@@ -39,12 +41,12 @@ def get_ebola_counts_by_country(countries):
 week_numbers = [0.5+w for w in range(52)]
 first_day_of_months = [0,31,59,90,120,151,181,212,243]#,273,304,334]
 week_number_of_first_of_month=[d/7.0 for d in first_day_of_months]
-def plot_site(ax,country,district,color,labels=['left']):
+def plot_site(ax,country,district,color,labels=['left'], max_week_scale=50):
     plt.bar(week_numbers, cases[country][district], width=0.8, color=color, alpha=0.5)
     adjust_spines(ax,labels)
     plt.xlim([0.5,38.5]) # weeks to mid-September
-    #plt.ylim([0,max(50,max(cases[country][district])+1)])
-    #plt.yticks(range(0,150,50))
+    plt.ylim([0,max(max_week_scale,max(cases[country][district])+1)]) # closer to equal scaling
+    #plt.yticks(range(0,350,50))
     plt.yticks([min(cases[country][district]), max(cases[country][district])])
     if 'bottom' in labels:
         plt.xticks(week_number_of_first_of_month)        
@@ -54,29 +56,40 @@ def plot_site(ax,country,district,color,labels=['left']):
 
 cases = get_ebola_counts_by_country(['Guinee','Sierra_Leone','Liberia'])
 
-sites=[ ('Liberia','Lofa','salmon'),
-        ('Liberia','Montserrado','darkred'),
-        ('Liberia','Margibi','r'),
-        #('Liberia','Nimba','r'),
-        #('Liberia','Bong','r'),        
-        ('Sierra_Leone','Kailahun','darkseagreen'),
-        ('Sierra_Leone','Kenema','g'),
-        #('Sierra_Leone','Kono','lightgreen'),
-        #('Sierra_Leone','Bo','forestgreen'),
-        #('Sierra_Leone','Bombali','g'),                
-        ('Sierra_Leone','Western (urban)','olive'),
-        #('Sierra_Leone','Western (rural)','olivedrab'),        
-        ('Sierra_Leone','Port Loko','darkolivegreen'),
-        ('Guinee','Conakry','darkblue'),
-        ('Guinee','Macenta','b'),
-        ('Guinee','Gueckedou','dodgerblue',['bottom','left'])
+sitesW=[
+        ('Guinee','Conakry','#1111aa'),
+        ('Sierra_Leone','Bombali','#114411'),
+        ('Sierra_Leone','Port Loko','#226622'),
+        ('Sierra_Leone','Western (urban)','#229922'),
+        ('Sierra_Leone','Western (rural)','#229922'),
+        ('Sierra_Leone','Bo','#88dd88'),
+        ('Sierra_Leone','Kenema','#99bb99'),
+        ('Sierra_Leone','Kailahun','#668866',['bottom','left'])
         ]
 
-plt.figure('Ebola cases', figsize=(8,8), facecolor='w')
-for i,site in enumerate(sites):
-    ax=plt.subplot(len(sites),1,i+1)
-    plot_site(ax,*site)
+sitesE=[
+        ('Guinee','Gueckedou','#8888ee'),  
+        ('Guinee','Macenta','#7755cc'),
+        ('Guinee','NZerekore','#8866aa'),
+        ('Liberia','Lofa','#aa2266'),
+        ('Liberia','Margibi','#aa2222'),
+        ('Liberia','Montserrado','#882222'),
+        ('Liberia','Bong','#884444'),
+        ('Liberia','Nimba','#886666',['bottom','left'])
+        ]
 
-#plt.xlabel('Week of 2014')
-plt.tight_layout()
+def plot_group_of_districts(group):
+    for i,site in enumerate(group):
+        ax=plt.subplot(len(group),1,i+1)
+        plot_site(ax,*site, max_week_scale=80)
+    plt.tight_layout()    
+
+plt.figure('Ebola cases West', figsize=(5,9), facecolor='w')
+plot_group_of_districts(sitesW)
+
+plt.figure('Ebola cases East', figsize=(5,9), facecolor='w')
+plot_group_of_districts(sitesE)
+
+#with open('../model/disease/weekly_cases.json','w') as f: json.dump(cases,f)
+
 plt.show()
