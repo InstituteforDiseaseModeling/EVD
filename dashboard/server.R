@@ -27,10 +27,10 @@ shinyServer(function(input, output) {
     casefinal <- NA
     for (i in input$country)
     {
-      file1 <- getURL(paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_EVD_2014.csv",sep=""))
+      file1 <- getURL(paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/data/",countrylist[strtoi(i)], "_EVD_2014.csv",sep=""))
       case1 <- read.csv(text = file1, stringsAsFactors = F)
       case1$X <- as.Date(case1$X, format="%m/%d/%Y")
-      filepop <- getURL(paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/",countrylist[strtoi(i)], "_population.csv",sep=""))
+      filepop <- getURL(paste("https://raw.githubusercontent.com/InstituteforDiseaseModeling/EVD/master/data/",countrylist[strtoi(i)], "_population.csv",sep=""))
       pop <- read.csv(text = filepop, stringsAsFactors = F)
       pop <- as.data.table(pop)
       
