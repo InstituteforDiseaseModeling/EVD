@@ -44,7 +44,7 @@ week_number_of_first_of_month=[d/7.0 for d in first_day_of_months]
 def plot_site(ax,country,district,color,labels=['left'], max_week_scale=50):
     plt.bar(week_numbers, cases[country][district], width=0.8, color=color, alpha=0.5)
     adjust_spines(ax,labels)
-    plt.xlim([0.5,39.5]) # weeks through September
+    plt.xlim([0.5,40.5]) # weeks into early October
     plt.ylim([0,max(max_week_scale,max(cases[country][district])+1)]) # closer to equal scaling
     #plt.yticks(range(0,350,50))
     plt.yticks([min(cases[country][district]), max(cases[country][district])])
