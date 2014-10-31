@@ -37,11 +37,11 @@
 
 	//assign names to national paths
 		var national_settings = [{'iso3':'GIN',
-								  'color': 'purple'},
+								  'color': 'navy'},
 							    {'iso3':'LBR',
-								  'color': 'purple'},
+								  'color': 'firebrick'},
 							    {'iso3':'SLE',
-								  'color': 'purple'}]
+								  'color': 'olive'}]
 
 
 	// aggregate subnational and national data to get proper colorscales on the district and national level 
@@ -58,12 +58,12 @@
 		}
 
 		//set minima and maxima for district-level colorscale
-		var district_min = d3.min(all_data)
+		var district_min = 0//d3.min(all_data)
 		var district_max = d3.max(all_data)
 
 		//set minima and maxima for national-level colorscale 
 		var summed_array = d3.keys(summed_vals).map(function(d){return summed_vals[d]})
-		var national_min = d3.min(summed_array)
+		var national_min = 0//d3.min(summed_array)
 		var national_max = d3.max(summed_array)
 
 
@@ -89,7 +89,7 @@
 
 		// get min and max, and set up a color scale
 			var case_values = d3.keys(cumulative_cases).map(function(d) {return cumulative_cases[d]})
-			var color_scale = d3.scale.linear().range(['white', nat_color]).domain([district_min, district_max])
+			var color_scale = d3.scale.sqrt().range(['white', nat_color]).domain([district_min, district_max])
 
 		//plot subnats
 			var subnat_paths = map_g.selectAll('.subnational')
@@ -101,6 +101,8 @@
 					.attr('parent_id', nat_name)
 					.attr('fill', nat_color)
 					.attr('stroke', '#000')
+					.attr('stroke-width', 0.2)
+					.attr('stroke-opacity', 0.5)
 					.attr('d', path)
 
 		//fill in colors
@@ -144,9 +146,10 @@
 			.attr('class', 'national')
 			.attr('id', function(d,i){return national_settings[i].iso3})
 			.attr('fill', function(d,i){return national_settings[i].color})
-			.attr('fill-opacity', 0.7)
-			.attr('stroke', "#000")
-			.attr('stroke-width', 2)
+			.attr('fill-opacity', 0.5)
+			.attr('stroke', "#000")//function (d, i) { return national_settings[i].color })
+			.attr('stroke-width', 0.5)
+			.attr('stroke-opacity', 0.5)
 			.attr('d', path)
 		  .on('click', showSubnats)
 
