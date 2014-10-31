@@ -143,6 +143,7 @@
 	
 	}
 
+
 	//define national data
 	var nat_shape_data = topojson.feature(national, national.objects.layer).features
 
