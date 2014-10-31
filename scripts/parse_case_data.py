@@ -45,8 +45,8 @@ def get_ebola_counts_by_country(countries):
     cases={}
     for country in countries:
         iso=iso_by_country[country]
-        #cases[iso]=read_case_counts(country+'_EVD_2014.csv') # Situation Reports (public)
-        cases[iso]=read_case_counts('case_reports_%s.csv' % country) # WHO VSHOC line list (confidential)
+        cases[iso]=read_case_counts(country+'_EVD_2014.csv') # Situation Reports (public)
+        #cases[iso]=read_case_counts('case_reports_%s.csv' % country) # WHO VSHOC line list (confidential)
     return cases
 
 if __name__=='__main__':

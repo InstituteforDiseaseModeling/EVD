@@ -8,7 +8,7 @@ var subnat_name_mapping = { 'GIN': {
 									  6: "Dabola",
 									  7: "Dinguiraye",
 									  8: "Faranah",
-									  9: "Kissidougou",
+									  9: "Kisidougou",
 									  10: "Kankan",
 									  11: "Kerouane",
 									  12: "Kouroussa",
@@ -31,7 +31,7 @@ var subnat_name_mapping = { 'GIN': {
 									  29: "Gueckedou",
 									  30: "Lola",
 									  31: "Macenta",
-									  32: "Nzerekore",
+									  32: "NZerekore",
 									  33: "Yomou"
 									},
 							'LBR': {
@@ -65,8 +65,8 @@ var subnat_name_mapping = { 'GIN': {
 									  9: "Bonthe",
 									  10: "Moyamba",
 									  11: "Pujehun",
-									  12: "Western Area Rural",
-									  13: "Western Area Urban"
+									  12: "Western (rural)",
+									  13: "Western (urban)"
 									}
 
 

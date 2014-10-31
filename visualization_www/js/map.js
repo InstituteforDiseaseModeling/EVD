@@ -80,15 +80,23 @@
 			//$('.subnational').fadeOut(400)
 
 
-		//load file that maps elements of the ordered list of subnationals to the subnat names
+		//load file that maps elements of the ordered list of subnationals (in shapefile) to the subnat names
 			var name_map = subnat_name_mapping[nat_name]
 
 		//load the incidence data
 			var national_cases = all_case_data[nat_name]
 			var cumulative_cases = national_cases['Cumulative']
 
-		// get min and max, and set up a color scale
-			var case_values = d3.keys(cumulative_cases).map(function(d) {return cumulative_cases[d]})
+			// some districts have no reported cases, and as such do not appear in our data.
+			// To ensure that these get mapped appropriately, we add zeroed entries for them 
+			// to our cumulative_cases object.
+			for (j=0; j<d3.keys(name_map).length; j++) {
+				if (d3.keys(cumulative_cases).indexOf(name_map[j])== -1){
+					cumulative_cases[ name_map[j] ] = 0
+				}
+			}
+
+		// set up a color scale using the min and max for districts in all countries, for consistency
 			var color_scale = d3.scale.sqrt().range(['white', nat_color]).domain([district_min, district_max])
 
 		//plot subnats
@@ -147,7 +155,7 @@
 			.attr('id', function(d,i){return national_settings[i].iso3})
 			.attr('fill', function(d,i){return national_settings[i].color})
 			.attr('fill-opacity', 0.5)
-			.attr('stroke', "#000")//function (d, i) { return national_settings[i].color })
+			.attr('stroke', "#000")
 			.attr('stroke-width', 0.5)
 			.attr('stroke-opacity', 0.5)
 			.attr('d', path)
