@@ -6,15 +6,15 @@ var Histogram = function(sets){
 
 	//settings
 	var self = this
-	self.height = 100
-	self.width = 350
+	self.height = 80
+	self.width = 360
 	self.padding = { 'xAxis': 35,
-					 'yAxis': 0,
+					 'yAxis': 15,
 					 'rightEdge': 15,
-					 'topEdge': 15
+					 'topEdge': 5
 					}
 
-	self.color = 'navy'
+	self.color = 'firebrick' // navy, firebrick, olive
 	self.data = sets.data
 	self.title = sets.title
 
@@ -22,6 +22,7 @@ var Histogram = function(sets){
 	self.svg = d3.select('#hist-container').append('svg')
 				 .attr('id', self.title + '-svg')
 				 .style('width', self.width)
+				 .style('height', self.height)
 
 	//create scales that both the axes and the rects will use for sizing
 	var allScales = {}
@@ -61,7 +62,7 @@ var Histogram = function(sets){
 	allScales['yAxisFunction'] = d3.svg.axis()
 				.scale(allScales['yAxisScale'])
 				.orient('left')
-				.ticks(3)
+				.ticks(2)
 
 	self.scaleFunctions = allScales
 
@@ -103,10 +104,12 @@ Histogram.prototype.draw = function() {
 			.attr('transform', 'translate(' + self.padding['xAxis']+ ','+ self.padding['topEdge'] + ')')
 			.call(self.scaleFunctions['yAxisFunction'])
 	  .append("text")
-		.attr("transform", "rotate(-90)")
+		//.attr("transform", "rotate(-90)")
 		.attr("y", 6)
+		.attr("x", 6)
 		.attr("dy", ".71em")
-		.style("text-anchor", "end")
+		.attr("class","district-text")
+		//.style("text-anchor", "end")
 		.text(self.title);
 
 
@@ -190,4 +193,4 @@ EbolaView.prototype.makePlots = function(){
 
 // ****** Instantiation code ********
 
-var testView = new EbolaView('SLE')
+var testView = new EbolaView('LBR')
