@@ -6,10 +6,10 @@ var Histogram = function(sets){
 
 	//settings
 	var self = this
-	self.height = 225
+	self.height = 100
 	self.width = 350
-	self.padding = { 'xAxis': 50,
-					 'yAxis': 100,
+	self.padding = { 'xAxis': 35,
+					 'yAxis': 0,
 					 'rightEdge': 15,
 					 'topEdge': 15
 					}
@@ -19,12 +19,9 @@ var Histogram = function(sets){
 	self.title = sets.title
 
 	//append div and svg
-	self.div = d3.select('#hist-container')//.append('div')
-		//.style('height', self.height + 'px')
-		//.style('width', self.width + 'px')
-		//.style('display', 'inline-block') //TODO LEARN ABOUT THIS SO WE CAN POSITION DIVS WRT MAP
-
-	self.svg = self.div.append('svg').attr('id', self.title+'-svg').style('width', self.width)
+	self.svg = d3.select('#hist-container').append('svg')
+				 .attr('id', self.title + '-svg')
+				 .style('width', self.width)
 
 	//create scales that both the axes and the rects will use for sizing
 	var allScales = {}
@@ -42,17 +39,29 @@ var Histogram = function(sets){
 
 	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0)
 
-	//get x-and y-axis set up
+	// convert 52 week numeric scale to months...
+	var t = d3.time.scale()
+		.domain([new Date(2012, 0, 1), new Date(2012, 11, 31)])
+		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
+
 	allScales['xAxisFunction'] = d3.svg.axis()
-				.scale(allScales['xScale'])
-				.orient('bottom')
-				.ticks(10)
-				.tickFormat(d3.format('d'))
+		.scale(t)
+		.orient("bottom")
+		.ticks(d3.time.months)
+		.tickSize(6, 0)
+		.tickFormat(d3.time.format("%b"));
+
+	//get x-and y-axis set up
+	//allScales['xAxisFunction'] = d3.svg.axis()
+	//			.scale(allScales['xScale'])
+	//			.orient('bottom')
+	//			.ticks(10)
+	//			.tickFormat(d3.format('d'))
 
 	allScales['yAxisFunction'] = d3.svg.axis()
 				.scale(allScales['yAxisScale'])
 				.orient('left')
-				.ticks(7)
+				.ticks(3)
 
 	self.scaleFunctions = allScales
 
@@ -65,7 +74,6 @@ var Histogram = function(sets){
 			.attr('id', function(d){return d.id})
 			.style('fill', self.color)
 	}
-
 
 	self.draw()
 }
@@ -82,6 +90,10 @@ Histogram.prototype.draw = function() {
 			.attr('class', 'axis')
 			.attr('transform', 'translate(' + self.padding['xAxis'] + ',' + (self.height - self.padding['yAxis']) +')')
 			.call(self.scaleFunctions['xAxisFunction'])
+	  .selectAll(".tick text")
+		.style("text-anchor", "start")
+		.attr("x", 4)
+		.attr("y", 4);
 
 	//y-axis
 	self.svg
@@ -128,15 +140,20 @@ EbolaView.prototype.prepData = function(iso3){
 	var self=this
 	var initial_data = all_case_data[iso3]
 
-	//let's take the 'cumulative' bit out, we can plot that elsewhere 
-	try{
+	//let's take the 'cumulative' bit out after sorting districts by cumulative counts
+	try {
+		sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
 		delete initial_data['Cumulative']
 	}
-	catch (e) {}
+	catch (e) {
+		d3.keys(initial_data)
+	}
 
 	self.data = []
 	var alldata = []
-	d3.keys(initial_data).map(function(d){
+	//d3.keys(initial_data)
+	sorted_keys
+		.map(function (d) {
 		var cases = initial_data[d]
 		alldata.push.apply(alldata, cases)
 		var obs = cases.length
