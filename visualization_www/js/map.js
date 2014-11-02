@@ -6,21 +6,23 @@
 //////////////////
 
 	//Projections, locate things on page
-		var settings = {width: document.getElementById('full-page').clientWidth,
-						height: 1150,
-						padding: 70}
+		var settings = {width: document.getElementById('map-container').clientWidth,
+						height: 800,
+						padY: 20,
+		                padX: -180}
 
 		// Set map projection
 			 var center = d3.geo.centroid(topojson.feature(national, national.objects.layer))
-			 var map_scale  = 5000;
+			 var map_scale  = 3800;
 			 var projection = d3.geo.equirectangular().scale(map_scale).center(center)
-			          .translate([settings.width/2, settings.height/4]);
+			          //.translate([settings.width/2, settings.height/4]);
+			          //.translate([settings.width/2, settings.height/4]);
 
 				// Set path generator -- how coordinates translate into a path element
 				var path = d3.geo.path().projection(projection)
 
 		//generate main SVG, smaller G which will contain the actual map, and title G
-			var full_svg = d3.select('#full-page').append('svg')
+			var full_svg = d3.select('#map-container').append('svg')
 						.attr('width', settings.width)
 						.attr('height', settings.height)
 						.attr('id', 'full-svg')
@@ -28,7 +30,7 @@
 			var map_g = d3.select('#full-svg')
 						 .append('g')
 						 .attr('id', 'map-g')
-						 .attr('transform', 'translate (0,' + settings.padding + ')')
+						 .attr('transform', 'translate ('+settings.padX+',' + settings.padY + ')')
 
 
 //////////////////

@@ -2,6 +2,16 @@ body{
 	background-color:#efefef;
 }
 
+#full-page {
+	width: 960px;
+	height: 650px;
+	margin: 0px auto;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: white;
+	/*border: 1px solid #efeeee;
+	box-shadow: 3px 3px 3px #efeeee;*/
+}
+
 #map-title{
 	font-size:24px;
 	margin:5px;
@@ -12,6 +22,19 @@ body{
 	font-weight: normal;
 	color:#403e3e;
 	margin:5px;
+}
+
+#map-container {
+	clear:left;
+	top: 0;
+	width: 600px;
+}
+
+#hist-container {
+	float: right;
+	/*clear:both;*/
+	width: 360px;
+	top: 0;
 }
 
 .title{

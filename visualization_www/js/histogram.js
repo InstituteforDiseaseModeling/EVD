@@ -19,10 +19,10 @@ var Histogram = function(sets){
 	self.title = sets.title
 
 	//append div and svg
-	self.div = d3.select('body').append('div')
-		.style('height', self.height + 'px')
-		.style('width', self.width + 'px')
-		.style('display', 'inline-block') //TODO LEARN ABOUT THIS SO WE CAN POSITION DIVS WRT MAP
+	self.div = d3.select('#hist-container')//.append('div')
+		//.style('height', self.height + 'px')
+		//.style('width', self.width + 'px')
+		//.style('display', 'inline-block') //TODO LEARN ABOUT THIS SO WE CAN POSITION DIVS WRT MAP
 
 	self.svg = self.div.append('svg').attr('id', self.title+'-svg').style('width', self.width)
 
@@ -31,16 +31,16 @@ var Histogram = function(sets){
 	allScales['xScale'] =  d3.scale.linear()
 									.domain([0, d3.max(self.data, function(d){return d.id})])
 									.range([0, self.width-self.padding['xAxis'] - self.padding['rightEdge']])
- 	
- 	allScales['yScale'] =  d3.scale.linear()
- 									.domain([0, sets.max])
- 									.range([0, self.height - self.padding['yAxis'] - self.padding['topEdge'] ])
+	
+	allScales['yScale'] =  d3.scale.linear()
+									.domain([0, sets.max])
+									.range([0, self.height - self.padding['yAxis'] - self.padding['topEdge'] ])
 
- 	allScales['yAxisScale'] = d3.scale.linear()
- 									.domain([0, sets.max])
- 									.range([self.height - self.padding['yAxis'] - self.padding['topEdge'], 0])
+	allScales['yAxisScale'] = d3.scale.linear()
+									.domain([0, sets.max])
+									.range([self.height - self.padding['yAxis'] - self.padding['topEdge'], 0])
 
- 	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0)
+	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0)
 
 	//get x-and y-axis set up
 	allScales['xAxisFunction'] = d3.svg.axis()
