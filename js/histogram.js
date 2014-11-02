@@ -18,7 +18,7 @@ var Histogram = function(sets){
 
 	self.data = sets.data
 	self.title = sets.title
-	console.log(sets.iso3)
+	//console.log(sets.iso3)
 	self.color = country_colors[sets.iso3]
 
 	//append div and svg
@@ -42,7 +42,7 @@ var Histogram = function(sets){
 									.domain([0, sets.max])
 									.range([self.height - self.padding['yAxis'] - self.padding['topEdge'], 0])
 
-	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0)
+	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0) -1
 
 	// convert 52 week numeric scale to months...
 	var t = d3.time.scale()
