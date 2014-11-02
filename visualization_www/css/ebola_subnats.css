@@ -1,5 +1,6 @@
 body{
-	background-color:#efefef;
+	/*background-color:#efefef;*/
+	background-color:white;
 }
 
 #full-page {
@@ -13,7 +14,7 @@ body{
 }
 
 #map-title{
-	font-size:24px;
+	font-size:18px;
 	margin:5px;
 }
 

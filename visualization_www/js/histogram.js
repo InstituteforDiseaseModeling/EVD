@@ -14,7 +14,7 @@ var Histogram = function(sets){
 					 'topEdge': 15
 					}
 
-	self.color = 'blue'
+	self.color = 'navy'
 	self.data = sets.data
 	self.title = sets.title
 
@@ -73,6 +73,7 @@ var Histogram = function(sets){
 			.attr('y', function(d){return (self.height - self.padding['yAxis']) - allScales['yScale'](d.cases)})
 			.attr('id', function(d){return d.id})
 			.style('fill', self.color)
+			.style('fill-opacity', 0.5)
 	}
 
 	self.draw()
@@ -101,6 +102,13 @@ Histogram.prototype.draw = function() {
 			.attr('class', 'axis')
 			.attr('transform', 'translate(' + self.padding['xAxis']+ ','+ self.padding['topEdge'] + ')')
 			.call(self.scaleFunctions['yAxisFunction'])
+	  .append("text")
+		.attr("transform", "rotate(-90)")
+		.attr("y", 6)
+		.attr("dy", ".71em")
+		.style("text-anchor", "end")
+		.text(self.title);
+
 
 
 	//draw rects 
@@ -110,8 +118,6 @@ Histogram.prototype.draw = function() {
 	self.rects.enter().append('rect').call(self.rectFeatures)
 	self.rects.exit().remove()
 	self.rects.transition().duration(500).call(self.rectFeatures)
-
-	//TODO: labels
 }
 
 
@@ -184,4 +190,4 @@ EbolaView.prototype.makePlots = function(){
 
 // ****** Instantiation code ********
 
-var testView = new EbolaView('LBR')
+var testView = new EbolaView('SLE')
