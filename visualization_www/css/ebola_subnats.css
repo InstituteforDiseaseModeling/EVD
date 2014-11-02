@@ -3,6 +3,10 @@ body{
 	background-color:white;
 }
 
+svg {
+	overflow: visible;
+}
+
 #full-page {
 	width: 960px;
 	height: 650px;
@@ -36,7 +40,6 @@ body{
 	/*clear:both;*/
 	padding: 25px 0px;
 	width: 360px;
-	top: 0;
 }
 
 .title{

@@ -6,15 +6,15 @@ var Histogram = function(sets){
 
 	//settings
 	var self = this
-	self.height = 80
+	self.height = 100
 	self.width = 360
 	self.padding = { 'xAxis': 35,
-					 'yAxis': 15,
+					 'yAxis': 25,
 					 'rightEdge': 15,
 					 'topEdge': 5
 					}
 
-	self.color = 'firebrick' // navy, firebrick, olive
+	self.color = 'navy' // navy, firebrick, olive
 	self.data = sets.data
 	self.title = sets.title
 
@@ -67,7 +67,7 @@ var Histogram = function(sets){
 	self.scaleFunctions = allScales
 
 	//position rects within svg
-	self.rectFeatures = function(rect){
+	self.rectFeatures = function (rect) {
 		rect.attr('width', allScales['xWidth']) 
 			.attr('height', function(d){return allScales['yScale'](d.cases)})
 			.attr('x', function(d){return (allScales['xScale'](d.id) + self.padding['xAxis']) })
@@ -193,4 +193,4 @@ EbolaView.prototype.makePlots = function(){
 
 // ****** Instantiation code ********
 
-var testView = new EbolaView('LBR')
+var testView = new EbolaView('GIN')
