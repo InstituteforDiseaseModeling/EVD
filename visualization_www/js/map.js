@@ -9,14 +9,14 @@
 		var settings = {width: document.getElementById('map-container').clientWidth,
 						height: 800,
 						padY: 20,
-		                padX: -180}
+						padX: -180}
 
 		// Set map projection
 			 var center = d3.geo.centroid(topojson.feature(national, national.objects.layer))
 			 var map_scale  = 3800;
 			 var projection = d3.geo.equirectangular().scale(map_scale).center(center)
-			          //.translate([settings.width/2, settings.height/4]);
-			          //.translate([settings.width/2, settings.height/4]);
+					  //.translate([settings.width/2, settings.height/4]);
+					  //.translate([settings.width/2, settings.height/4]);
 
 				// Set path generator -- how coordinates translate into a path element
 				var path = d3.geo.path().projection(projection)
@@ -40,9 +40,9 @@
 	//assign names to national paths
 		var national_settings = [{'iso3':'GIN',
 								  'color': 'navy'},
-							    {'iso3':'LBR',
+								{'iso3':'LBR',
 								  'color': 'firebrick'},
-							    {'iso3':'SLE',
+								{'iso3':'SLE',
 								  'color': 'olive'}]
 
 
@@ -70,7 +70,7 @@
 
 
 	//function for subnat plotting on national click
-	var showSubnats = function(d){
+		var showSubnats = function (d) {
 
 		//get properties of national value, load shapefile
 			var nat_name = $(this).attr('id')
@@ -80,7 +80,6 @@
 		//get rid of the current subnats 
 			map_g.selectAll('.subnational').remove()
 			//$('.subnational').fadeOut(400)
-
 
 		//load file that maps elements of the ordered list of subnationals (in shapefile) to the subnat names
 			var name_map = subnat_name_mapping[nat_name]
@@ -107,7 +106,7 @@
 					.enter()
 					.append('path')
 					.attr('class', 'subnational' )
-					.attr('id', function(d,i){return name_map[i]})
+					.attr('id', function (d, i) {return name_map[i]})
 					.attr('parent_id', nat_name)
 					.attr('fill', nat_color)
 					.attr('stroke', '#000')
@@ -142,6 +141,9 @@
 				return name + ' : ' + cases + ' Cases' // String to return
 			}
 			})
+
+			d3.selectAll('.case-hist').remove()
+			var testView = new EbolaView(nat_name)
 	
 	}
 

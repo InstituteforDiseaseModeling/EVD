@@ -14,13 +14,17 @@ var Histogram = function(sets){
 					 'topEdge': 5
 					}
 
-	self.color = 'navy' // navy, firebrick, olive
+	country_colors = {'GIN':'navy','SLE':'olive','LBR':'firebrick'}
+
 	self.data = sets.data
 	self.title = sets.title
+	console.log(sets.iso3)
+	self.color = country_colors[sets.iso3]
 
 	//append div and svg
 	self.svg = d3.select('#hist-container').append('svg')
 				 .attr('id', self.title + '-svg')
+				 .attr('class','case-hist')
 				 .style('width', self.width)
 				 .style('height', self.height)
 
@@ -140,7 +144,7 @@ var EbolaView = function(iso3){
 EbolaView.prototype.build = function(iso3){
 	var self = this
 	self.prepData(iso3)
-	self.makePlots()
+	self.makePlots(iso3)
 	//self.makeInteractive()
 }
 
@@ -149,10 +153,9 @@ EbolaView.prototype.prepData = function(iso3){
 	var self=this
 	var initial_data = all_case_data[iso3]
 
-	//let's take the 'cumulative' bit out after sorting districts by cumulative counts
+	//sorting districts by cumulative counts
 	try {
 		sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
-		delete initial_data['Cumulative']
 	}
 	catch (e) {
 		d3.keys(initial_data)
@@ -160,11 +163,13 @@ EbolaView.prototype.prepData = function(iso3){
 
 	self.data = []
 	var alldata = []
-	//d3.keys(initial_data)
 	sorted_keys
 		.map(function (d) {
 		var cases = initial_data[d]
 		alldata.push.apply(alldata, cases)
+		if (!cases) {
+		    return;
+		}
 		var obs = cases.length
 		var data = []
 		
@@ -179,13 +184,14 @@ EbolaView.prototype.prepData = function(iso3){
 }
 
 //make plots 
-EbolaView.prototype.makePlots = function(){
+EbolaView.prototype.makePlots = function(iso3){
 	var self = this
 	d3.keys(self.data).map(function(d){
 		self.charts[d] = new Histogram( {
 			data: self.data[d],
 			title: d,
-			max: self.maxdata
+			max: self.maxdata,
+			iso3: iso3
 			})
 	})
 }
@@ -193,4 +199,4 @@ EbolaView.prototype.makePlots = function(){
 
 // ****** Instantiation code ********
 
-var testView = new EbolaView('GIN')
+//var testView = new EbolaView('GIN')
