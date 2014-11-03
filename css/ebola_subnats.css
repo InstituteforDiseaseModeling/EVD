@@ -30,7 +30,7 @@ svg {
 }
 
 #map-container {
-	clear:left;
+/*	clear:left;*/
 	top: 0;
 	width: 600px;
 }

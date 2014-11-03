@@ -7,7 +7,7 @@
 
 	//Projections, locate things on page
 		var settings = {width: document.getElementById('map-container').clientWidth,
-						height: 800,
+						height: 600,
 						padY: 20,
 						padX: -180}
 
@@ -72,6 +72,16 @@
 								{'iso3':'SLE',
 								 'fullName': 'Sierra Leone',
 								  'color': 'olive'}]
+
+			//default and mouseover values for boundaries
+		var border_settings = {'default': {'stroke-width': 0.2,
+											'stroke-opacity': 0.5
+											},
+								'mouseenter': {'stroke-width': 2,
+											'stroke-opacity': 1
+											}
+
+								}
 
 
 	// We need to do a couple of things with this data before we map:
@@ -163,15 +173,6 @@
 		// set up a color scale using the min and max for districts in all countries, for consistency
 			var color_scale = d3.scale.sqrt().range(['white', nat_color]).domain([district_min, district_max])
 
-		//default and mouseover values for subnat boundaries
-		var border_settings = {'default': {'stroke-width': 0.2,
-											'stroke-opacity': 0.5
-											},
-								'mouseenter': {'stroke-width': 2,
-											'stroke-opacity': 1
-											}
-
-								}
 
 		//plot subnats
 			var subnat_paths = map_g.selectAll('.subnational')
@@ -254,6 +255,27 @@
 			.style('stroke-opacity', 0.5)
 			.attr('d', path)
 		  .on('click', showSubnats)
+	  	.on('mouseenter', function(d){  //make border thicker on mouseover
+					var obj = $(this)
+					//make a box around the histogram of the district you're on
+					var svgId = '#' + obj.context.id + '-svg'
+					d3.select(svgId).append('rect')
+						.attr('height', 100)
+						.attr('width', 360)
+						.attr('stroke', 'black')
+						.attr('stroke-width', '3px')
+						.attr('fill-opacity', 0)
+						.attr('class', 'box')
+					//change the border width of the subnat you're on
+					obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
+					obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
+				})
+				.on('mouseleave', function(d){ //make border thinner when mouse leaves, get rid of histogram box
+					var obj = $(this)
+					d3.selectAll('.box').remove()
+					obj.context.style['stroke-width'] = border_settings['default']['stroke-width']
+					obj.context.style['stroke-opacity'] = border_settings['default']['stroke-opacity']
+				})
 
 
 		//make national fill dependent on cumulative cases nationally
@@ -283,5 +305,46 @@
 	var natPlots = new EbolaView('G', 'national')
 
 
+//////////////////
+///CREDITS 
+//////////////////
+	//legend-type figure in bottom corner 
+	var signatureG = d3.select('#full-svg')
+				 .append('g')
+				 .attr('id', 'signature-g')
+				 .attr('width', 300)
+				 .attr('height', 200)
+				 .attr('transform', 'translate(' + document.getElementById('full-svg').clientWidth/12 +  ',' + 500 +')'  )
 
+
+	var nameList = ['Amelia Bertozzi-Villa', 'Edward Wenger', 'Hao Hu']
+	signatureG.selectAll('text')
+			  .data(nameList)
+			  .enter()
+			  .append('text')
+			  .text(function(d){return d})
+			  .attr('transform', function(d,i) {return 'translate(0, ' + (i*20+20) + ')'})
+			  .style('font-weight', 'bold')
+
+	signatureG.append('svg:a')
+			.attr('width', 300)
+			.attr('height', 100)
+			.attr('transform', 'translate(0, 80)')
+			.attr('id', 'idm-link')
+			 .attr('xlink:href', 'http://idmod.org')
+			 .attr('target', '_blank')
+			 .append('text')
+			 .text('Institute for Disease Modeling')
+			 .style('text-decoration', 'underline')
+
+	signatureG.append('svg:a')
+		.attr('width', 300)
+		.attr('height', 100)
+		.attr('transform', 'translate(0, 100)')
+		.attr('id', 'data-link')
+		 .attr('xlink:href', 'http://reliefweb.int/')
+		 .attr('target', '_blank')
+		 .append('text')
+		 .text('Data from Situation Reports')
+		 .style('text-decoration', 'underline')
 

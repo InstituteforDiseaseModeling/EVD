@@ -43,7 +43,7 @@ var Histogram = function(sets){
 						var shapeId = '#' + obj.context.id.replace('-svg', '')
 						d3.select('shapeId').style('stroke-width', 2)
 							.style('stroke-opacity', 1)
-						console.log(shapeId, d3.select('shapeId'))
+						//console.log(shapeId, d3.select('shapeId'))
 				})
 				.on('mouseleave', function(d){ 
 						//make the box go away
