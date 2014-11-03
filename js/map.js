@@ -41,16 +41,36 @@
 		}
 
 
+		//function for customizeable poshytip mouseovers
+		var makePoshyTip = function(identifier, contentFunction){
+			$(identifier).poshytip({
+			alignTo: 'cursor', // Align to cursor
+			followCursor: true, // follow cursor when it moves
+			showTimeout: 0, // No fade in
+			hideTimeout: 0,  // No fade out
+			alignX: 'center', // X alignment
+			alignY: 'inner-bottom', // Y alignment
+			className: 'tip-twitter', // Class for styling
+			offsetY: 10, // Offset vertically
+			slide: false, // No slide animation
+			content: contentFunction
+			})
+		}
+
+
 //////////////////
 ///PLOTTING
 //////////////////
 
 	//assign names to national paths
 		var national_settings = [{'iso3':'GIN',
+								  'fullName': 'Guinea',
 								  'color': 'navy'},
 								{'iso3':'LBR',
+								  'fullName': 'Liberia',
 								  'color': 'firebrick'},
 								{'iso3':'SLE',
+								 'fullName': 'Sierra Leone',
 								  'color': 'olive'}]
 
 
@@ -165,25 +185,18 @@
 				return color
 			})
 
-		//mouseover text: list name of province and number of cases so far
-			$('#map-g .subnational').poshytip({
-			alignTo: 'cursor', // Align to cursor
-			followCursor: true, // follow cursor when it moves
-			showTimeout: 0, // No fade in
-			hideTimeout: 0,  // No fade out
-			alignX: 'center', // X alignment
-			alignY: 'inner-bottom', // Y alignment
-			className: 'tip-twitter', // Class for styling
-			offsetY: 10, // Offset vertically
-			slide: false, // No slide animation
-			content: function(d){
+
+		// set up inputs for subnational map poshytip
+			var subnatIdentifier = '#map-g .subnational'
+			var subnatContentFunction = function(d){
 				var obj = this.__data__ // Data associated with element
 				var name = $(this).attr('id') // Name from properties
 				var nat_name = $(this).attr('parent_id')
 				var cases = all_case_data[nat_name]['Cumulative'][name] // iso3
 				return name + ' : ' + cases + ' Cases' // String to return
 			}
-			})
+
+			makePoshyTip(subnatIdentifier, subnatContentFunction)
 
 			d3.selectAll('.case-hist').remove()
 			var testView = new EbolaView(nat_name, 'subnational')
@@ -199,7 +212,7 @@
 			.data(nat_shape_data)
 			.enter()
 			.append('path')
-			.attr('class', 'national')
+			.attr('class', function(d,i){return 'national' + ' ' + national_settings[i].fullName})
 			.attr('id', function(d,i){return national_settings[i].iso3})
 			.attr('fill', function(d,i){return national_settings[i].color})
 			.attr('fill-opacity', 0.5)
@@ -220,6 +233,18 @@
 			return nat_color
 		})
 
+
+	//set up inputs for national map poshytip
+		var natIdentifier = '#map-g .national'
+		var natContentFunction = function(d){
+			var natName = $(this).attr('id') // iso3 for pulling case count
+			var fullName = $(this).attr('class') // full name for pretty poshytip
+			fullName = fullName.replace('national ', '') 
+			var cases = national_cases['Cumulative'][natName] //cumulative case count
+			return fullName + ' : ' + cases + ' Cases' // String to return
+		}
+
+		makePoshyTip(natIdentifier, natContentFunction)
 
 	//plot national bar charts
 	var natPlots = new EbolaView('G', 'national')
