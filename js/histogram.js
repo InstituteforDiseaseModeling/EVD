@@ -14,12 +14,12 @@ var Histogram = function(sets){
 					 'topEdge': 5
 					}
 
-	country_colors = {'GIN':'navy','SLE':'olive','LBR':'firebrick'}
 
 	self.data = sets.data
 	self.title = sets.title
-	//console.log(sets.iso3)
-	self.color = country_colors[sets.iso3]
+	self.color = sets.color
+	self.mapType = sets.mapType
+	self.countrySettings = sets.settings
 
 	//append div and svg
 	self.svg = d3.select('#hist-container').append('svg')
@@ -44,24 +44,18 @@ var Histogram = function(sets){
 
 	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0) -1
 
-	// convert 52 week numeric scale to months...
+	// convert 52 week numeric scale to months for x-axis labeling
 	var t = d3.time.scale()
 		.domain([new Date(2012, 0, 1), new Date(2012, 11, 31)])
 		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
 
+	//get x-and y-axis set up
 	allScales['xAxisFunction'] = d3.svg.axis()
 		.scale(t)
 		.orient("bottom")
 		.ticks(d3.time.months)
 		.tickSize(6, 0)
 		.tickFormat(d3.time.format("%b"));
-
-	//get x-and y-axis set up
-	//allScales['xAxisFunction'] = d3.svg.axis()
-	//			.scale(allScales['xScale'])
-	//			.orient('bottom')
-	//			.ticks(10)
-	//			.tickFormat(d3.format('d'))
 
 	allScales['yAxisFunction'] = d3.svg.axis()
 				.scale(allScales['yAxisScale'])
@@ -77,7 +71,14 @@ var Histogram = function(sets){
 			.attr('x', function(d){return (allScales['xScale'](d.id) + self.padding['xAxis']) })
 			.attr('y', function(d){return (self.height - self.padding['yAxis']) - allScales['yScale'](d.cases)})
 			.attr('id', function(d){return d.id})
-			.style('fill', self.color)
+			.style('fill', function(d){
+				if ( self.mapType=='subnational'){
+					return self.color
+				}
+				else {
+					return self.color[self.title]
+				}
+			})
 			.style('fill-opacity', 0.5)
 	}
 
@@ -114,9 +115,14 @@ Histogram.prototype.draw = function() {
 		.attr("dy", ".71em")
 		.attr("class","district-text")
 		//.style("text-anchor", "end")
-		.text(self.title);
-
-
+		.text(function(d){
+			if (self.mapType=='subnational'){
+				return self.title
+			}
+			else{
+				return self.countrySettings[self.title]['fullName']
+			}
+		});
 
 	//draw rects 
 	self.rects = self.svg.selectAll('rect')
@@ -134,31 +140,57 @@ Histogram.prototype.draw = function() {
 //to start: just histograms
 // TODO: incorporate mapping function
 
-var EbolaView = function(iso3){
+var EbolaView = function(iso3, mapType){
 	var self = this
 	self.charts = []
-	self.build(iso3)
+	self.iso3 = iso3
+	self.mapType = mapType
+	self.build()
 } 
 
 // build function
-EbolaView.prototype.build = function(iso3){
+EbolaView.prototype.build = function(){
 	var self = this
-	self.prepData(iso3)
-	self.makePlots(iso3)
+	self.prepData()
+	self.makePlots()
 	//self.makeInteractive()
 }
 
 // prep data
-EbolaView.prototype.prepData = function(iso3){
+EbolaView.prototype.prepData = function(){
 	var self=this
-	var initial_data = all_case_data[iso3]
+
+	//we want to use different datasets and do slightly different things with color depending on whether we're mapping national or subnational
+	var country_settings = {'GIN': {'color':'navy',
+								  'fullName': 'Guinea'
+								},
+						  'SLE': {'color':'olive',
+						  	  	  'fullName': 'Sierra Leone'
+						  	  	},
+						  'LBR': {'color': 'firebrick',
+								  'fullName': 'Liberia'}
+								}
+
+	if (self.mapType=='subnational'){
+		var initial_data = all_case_data[self.iso3]
+		self.color = country_settings[self.iso3]['color']
+	}
+	else{
+		var initial_data = national_cases
+		var country_colors = {}
+		d3.keys(country_settings).map(function(d){
+			country_colors[d] = country_settings[d]['color']
+		})
+		self.color = country_colors
+	}
+	self.countrySettings = country_settings
 
 	//sorting districts by cumulative counts
 	try {
 		sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
 	}
 	catch (e) {
-		d3.keys(initial_data)
+		sorted_keys = d3.keys(initial_data)
 	}
 
 	self.data = []
@@ -184,14 +216,17 @@ EbolaView.prototype.prepData = function(iso3){
 }
 
 //make plots 
-EbolaView.prototype.makePlots = function(iso3){
+EbolaView.prototype.makePlots = function(){
 	var self = this
 	d3.keys(self.data).map(function(d){
 		self.charts[d] = new Histogram( {
 			data: self.data[d],
 			title: d,
 			max: self.maxdata,
-			iso3: iso3
+			iso3: self.iso3,
+			color: self.color,
+			mapType: self.mapType,
+			settings: self.countrySettings
 			})
 	})
 }

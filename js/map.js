@@ -33,6 +33,14 @@
 						 .attr('transform', 'translate ('+settings.padX+',' + settings.padY + ')')
 
 
+		//function to get the first element of an object
+		var firstElem = function(obj) {
+		    for (var key in obj) {
+		        if (obj.hasOwnProperty(key)) return key;
+		    }
+		}
+
+
 //////////////////
 ///PLOTTING
 //////////////////
@@ -46,25 +54,60 @@
 								  'color': 'olive'}]
 
 
-	// aggregate subnational and national data to get proper colorscales on the district and national level 
+	// We need to do a couple of things with this data before we map:
+
+	// 1. Even though you only see one country's subnationals at a time, we should scale the cloropleth 
+	//  	to the highest-case district of all countries-- otherwise, the highest-case district in LBR 
+	//		will look just as severe as the highest case country in GIN, even though the former has far 
+	//		fewer cases.
+
+	// 2. We should do something similar for the national-level colors: scale to the highest-case country
+
+	// 3. The data is already set up in time series by district, so it's easy to make histograms for them.
+	//		We should also make a national-level time series of incidence that is displayed when the screen loads.
+
+	// We do all of these things in the following loop. 
 
 		//combine all the subnational data; find the biggest value
-		var all_data = []
-		var summed_vals = {}
-		for (i=0; i<national_settings.length; i++) {
-			var nat_name = national_settings[i]['iso3']
-			var nat_data = all_case_data[nat_name]['Cumulative']
-			var nat_array = d3.keys(nat_data).map(function(d) { return nat_data[d] })
-			all_data.push.apply(all_data, nat_array)
-			summed_vals[nat_name] = d3.sum(nat_array)
-		}
+		var all_subnational_values = []
+		var national_cases = {}
+		national_cases['Cumulative'] = {}
 
+		for (i=0; i<national_settings.length; i++) {
+
+			var nat_name = national_settings[i]['iso3']
+
+			// 1. extract subnational case data; later we will take the max of these values and use it for the color scale 
+			var subnat_data = all_case_data[nat_name]
+			var cum_subnat_data = subnat_data['Cumulative'] //extract cumulative case data from each district; this will still be an object
+			var cum_subnat_array = d3.keys(cum_subnat_data).map(function(d) { return cum_subnat_data[d] }) // extract just the case counts from this object; this will be an array
+			all_subnational_values.push.apply(all_subnational_values, cum_subnat_array) // push that array into the country-spanning array we want to take the maximum value of
+
+			// 2. Sum values across districts to get a national cumulative value; use this to scale the national colors
+			national_cases[nat_name] = []
+			national_cases['Cumulative'][nat_name] = d3.sum(cum_subnat_array)
+
+			// 3. Generate a national-level time series
+			var first_element = firstElem(subnat_data)
+			var week_count = subnat_data[first_element].length
+
+			for (j=0; j<week_count; j++) {
+				var element_j = d3.keys(subnat_data).map(function(d){
+					if ( (d=="Cumulative") || (d=="National") ){
+						return 0
+					}
+					return subnat_data[d][j]
+				})
+			    national_cases[nat_name][j] = d3.sum(element_j)
+			} //end subnat loop
+		} //end national loop
+ 
 		//set minima and maxima for district-level colorscale
-		var district_min = 0//d3.min(all_data)
-		var district_max = d3.max(all_data)
+		var district_min = 0//d3.min(all_subnational_values)
+		var district_max = d3.max(all_subnational_values)
 
 		//set minima and maxima for national-level colorscale 
-		var summed_array = d3.keys(summed_vals).map(function(d){return summed_vals[d]})
+		var summed_array = d3.keys(national_cases['Cumulative']).map(function(d){return national_cases['Cumulative'][d]})
 		var national_min = 0//d3.min(summed_array)
 		var national_max = d3.max(summed_array)
 
@@ -143,7 +186,7 @@
 			})
 
 			d3.selectAll('.case-hist').remove()
-			var testView = new EbolaView(nat_name)
+			var testView = new EbolaView(nat_name, 'subnational')
 	
 	}
 
@@ -171,11 +214,15 @@
 		national_paths.attr('fill', function(d,i){
 			var nat_name = $(this).attr('id')
 			var base_color = national_settings[i]['color']
-			var nat_cases = summed_vals[nat_name]
+			var nat_cases = d3.sum(national_cases[nat_name])
 			var nat_color_scale = d3.scale.linear().range(['white', base_color]).domain([0, national_max])
 			var nat_color = nat_color_scale(nat_cases)
 			return nat_color
 		})
+
+
+	//plot national bar charts
+	var natPlots = new EbolaView('G', 'national')
 
 
 
