@@ -179,7 +179,8 @@
 					.enter()
 					.append('path')
 					.attr('class', 'subnational' )
-					.attr('id', function (d, i) {return name_map[i]})
+					.attr('id', function (d, i) {return name_map[i].replace(/\s/g, '_').replace(/[()]/g, '')})
+					.attr('district_name', function(d,i) {return name_map[i]})
 					.attr('parent_id', nat_name)
 					.style('fill', nat_color)
 					.style('stroke', '#000')
@@ -188,11 +189,22 @@
 					.attr('d', path)
 					.on('mouseenter', function(d){  //make border thicker on mouseover
 						var obj = $(this)
+						//make a box around the histogram of the district you're on
+						var svgId = '#' + obj.context.id + '-svg'
+						d3.select(svgId).append('rect')
+							.attr('height', 100)
+							.attr('width', 360)
+							.attr('stroke', 'black')
+							.attr('stroke-width', '3px')
+							.attr('fill-opacity', 0)
+							.attr('class', 'box')
+						//change the border width of the subnat you're on
 						obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
 						obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
 					})
-					.on('mouseleave', function(d){ //make border thinner when mouse leaves
+					.on('mouseleave', function(d){ //make border thinner when mouse leaves, get rid of histogram box
 						var obj = $(this)
+						d3.selectAll('.box').remove()
 						obj.context.style['stroke-width'] = border_settings['default']['stroke-width']
 						obj.context.style['stroke-opacity'] = border_settings['default']['stroke-opacity']
 					})
@@ -200,7 +212,7 @@
 
 		//fill in colors
 			subnat_paths.style('fill', function(d,i){
-				var subnat_name = $(this).attr('id')
+				var subnat_name = name_map[i]
 				var value = cumulative_cases[subnat_name]
 				var color = color_scale(value)
 				return color
@@ -211,7 +223,7 @@
 			var subnatIdentifier = '#map-g .subnational'
 			var subnatContentFunction = function(d){
 				var obj = this.__data__ // Data associated with element
-				var name = $(this).attr('id') // Name from properties
+				var name = $(this).attr('district_name') // Name from properties
 				var nat_name = $(this).attr('parent_id')
 				var cases = all_case_data[nat_name]['Cumulative'][name] // iso3
 				return name + ' : ' + cases + ' Cases' // String to return
@@ -269,8 +281,6 @@
 
 	//plot national bar charts
 	var natPlots = new EbolaView('G', 'national')
-
-
 
 
 

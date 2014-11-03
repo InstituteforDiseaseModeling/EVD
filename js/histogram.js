@@ -23,10 +23,38 @@ var Histogram = function(sets){
 
 	//append div and svg
 	self.svg = d3.select('#hist-container').append('svg')
-				 .attr('id', self.title + '-svg')
+				 .attr('id', self.title.replace(/\s/g, '_').replace(/[()]/g, '') + '-svg')
 				 .attr('class','case-hist')
 				 .style('width', self.width)
 				 .style('height', self.height)
+				.on('mouseenter', function(d){
+						var obj = $(this)
+						//make a box around the histogram you're on
+						var svgId = '#' + obj.context.id
+						d3.select(svgId).append('rect')
+							.attr('height', 100)
+							.attr('width', 360)
+							.attr('stroke', 'black')
+							.attr('stroke-width', '3px')
+							.attr('fill-opacity', 0)
+							.attr('class', 'box')
+
+						//change the border width of the subnat your histogram is of
+						var shapeId = '#' + obj.context.id.replace('-svg', '')
+						d3.select('shapeId').style('stroke-width', 2)
+							.style('stroke-opacity', 1)
+						console.log(shapeId, d3.select('shapeId'))
+				})
+				.on('mouseleave', function(d){ 
+						//make the box go away
+						var obj = $(this)
+						d3.selectAll('.box').remove()
+						//change the border widths back
+						var shapeId = '#' + obj.context.id.replace('-svg', '')
+						d3.select('shapeId').style('stroke-width', 0.2)
+							.style('stroke-opacity', 0.5)
+
+					})
 
 	//create scales that both the axes and the rects will use for sizing
 	var allScales = {}
@@ -48,8 +76,6 @@ var Histogram = function(sets){
 	allScales['timeScale'] = d3.time.scale()
 		.domain([new Date(2012, 0, 1), new Date(2012, 11, 31)])
 		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
-
-	testTime = allScales['timeScale']
 
 	//get x-and y-axis set up
 	allScales['xAxisFunction'] = d3.svg.axis()
@@ -146,18 +172,6 @@ Histogram.prototype.draw = function() {
 
 	self.rects.exit().remove()
 	self.rects.transition().duration(500).call(self.rectFeatures)
-
-
-	//set up inputs for histogram poshytip
-	var rectIdentifier = '.case-hist rect'
-	var rectContentFunction = function(d){
-		var obj = $(this)[0]
-		var cases = obj.__data__.cases
-		var week = Number(obj.id)
-		return cases + ' Cases'
-	}
-
-	makePoshyTip(rectIdentifier, rectContentFunction)
 
 }
 
@@ -257,6 +271,17 @@ EbolaView.prototype.makePlots = function(){
 			settings: self.countrySettings
 			})
 	})
+
+	//set up inputs for histogram poshytip
+	var rectIdentifier = '.case-hist rect'
+	var rectContentFunction = function(d){
+		var obj = $(this)[0]
+		var cases = obj.__data__.cases
+		var week = Number(obj.id)
+		return cases + ' Cases'
+	}
+
+	makePoshyTip(rectIdentifier, rectContentFunction)
 }
 
 
