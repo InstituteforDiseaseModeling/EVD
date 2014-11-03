@@ -45,13 +45,15 @@ var Histogram = function(sets){
 	allScales['xWidth'] = allScales['xScale'](1) - allScales['xScale'](0) -1
 
 	// convert 52 week numeric scale to months for x-axis labeling
-	var t = d3.time.scale()
+	allScales['timeScale'] = d3.time.scale()
 		.domain([new Date(2012, 0, 1), new Date(2012, 11, 31)])
 		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
 
+	testTime = allScales['timeScale']
+
 	//get x-and y-axis set up
 	allScales['xAxisFunction'] = d3.svg.axis()
-		.scale(t)
+		.scale(allScales['timeScale'])
 		.orient("bottom")
 		.ticks(d3.time.months)
 		.tickSize(6, 0)
@@ -80,6 +82,7 @@ var Histogram = function(sets){
 				}
 			})
 			.style('fill-opacity', 0.5)
+
 	}
 
 	self.draw()
@@ -129,8 +132,33 @@ Histogram.prototype.draw = function() {
 		.data(self.data)
 
 	self.rects.enter().append('rect').call(self.rectFeatures)
+			.on('mouseenter', function(d){  //make border thicker on mouseover
+				var obj = $(this)
+				obj.context.style['stroke'] = 'black'
+				obj.context.style['stroke-width'] = 2
+				obj.context.style['stroke-opacity'] = 1
+			})
+			.on('mouseleave', function(d){ //make border thinner when mouse leaves
+				var obj = $(this)
+				obj.context.style['stroke-width'] = 0
+				obj.context.style['stroke-opacity'] = 0
+			})
+
 	self.rects.exit().remove()
 	self.rects.transition().duration(500).call(self.rectFeatures)
+
+
+	//set up inputs for histogram poshytip
+	var rectIdentifier = '.case-hist rect'
+	var rectContentFunction = function(d){
+		var obj = $(this)[0]
+		var cases = obj.__data__.cases
+		var week = Number(obj.id)
+		return cases + ' Cases'
+	}
+
+	makePoshyTip(rectIdentifier, rectContentFunction)
+
 }
 
 

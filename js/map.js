@@ -137,7 +137,7 @@
 
 		//get properties of national value, load shapefile
 			var nat_name = $(this).attr('id')
-			var nat_color = $(this).attr('fill')
+			var nat_color = $(this).context.style.fill
 			var subnat_shape = topojson.feature(subnats, subnats.objects[nat_name + '_subnat']).features
 
 		//get rid of the current subnats 
@@ -163,6 +163,16 @@
 		// set up a color scale using the min and max for districts in all countries, for consistency
 			var color_scale = d3.scale.sqrt().range(['white', nat_color]).domain([district_min, district_max])
 
+		//default and mouseover values for subnat boundaries
+		var border_settings = {'default': {'stroke-width': 0.2,
+											'stroke-opacity': 0.5
+											},
+								'mouseenter': {'stroke-width': 2,
+											'stroke-opacity': 1
+											}
+
+								}
+
 		//plot subnats
 			var subnat_paths = map_g.selectAll('.subnational')
 					.data(subnat_shape)
@@ -171,14 +181,25 @@
 					.attr('class', 'subnational' )
 					.attr('id', function (d, i) {return name_map[i]})
 					.attr('parent_id', nat_name)
-					.attr('fill', nat_color)
-					.attr('stroke', '#000')
-					.attr('stroke-width', 0.2)
-					.attr('stroke-opacity', 0.5)
+					.style('fill', nat_color)
+					.style('stroke', '#000')
+					.style('stroke-width', border_settings['default']['stroke-width'])
+					.style('stroke-opacity', border_settings['default']['stroke-opacity'])
 					.attr('d', path)
+					.on('mouseenter', function(d){  //make border thicker on mouseover
+						var obj = $(this)
+						obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
+						obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
+					})
+					.on('mouseleave', function(d){ //make border thinner when mouse leaves
+						var obj = $(this)
+						obj.context.style['stroke-width'] = border_settings['default']['stroke-width']
+						obj.context.style['stroke-opacity'] = border_settings['default']['stroke-opacity']
+					})
+					
 
 		//fill in colors
-			subnat_paths.attr('fill', function(d,i){
+			subnat_paths.style('fill', function(d,i){
 				var subnat_name = $(this).attr('id')
 				var value = cumulative_cases[subnat_name]
 				var color = color_scale(value)
@@ -214,17 +235,17 @@
 			.append('path')
 			.attr('class', function(d,i){return 'national' + ' ' + national_settings[i].fullName})
 			.attr('id', function(d,i){return national_settings[i].iso3})
-			.attr('fill', function(d,i){return national_settings[i].color})
-			.attr('fill-opacity', 0.5)
-			.attr('stroke', "#000")
-			.attr('stroke-width', 0.5)
-			.attr('stroke-opacity', 0.5)
+			.style('fill', function(d,i){return national_settings[i].color})
+			.style('fill-opacity', 0.5)
+			.style('stroke', "#000")
+			.style('stroke-width', 0.5)
+			.style('stroke-opacity', 0.5)
 			.attr('d', path)
 		  .on('click', showSubnats)
 
 
 		//make national fill dependent on cumulative cases nationally
-		national_paths.attr('fill', function(d,i){
+		national_paths.style('fill', function(d,i){
 			var nat_name = $(this).attr('id')
 			var base_color = national_settings[i]['color']
 			var nat_cases = d3.sum(national_cases[nat_name])
