@@ -15,6 +15,19 @@ var Histogram = function(sets){
 					}
 
 
+	// Is this redundant and already included?
+	//default and mouseover values for boundaries
+	var border_settings = {
+		'default': {
+			'stroke-width': 0.2,
+			'stroke-opacity': 0.5
+		},
+		'mouseenter': {
+			'stroke-width': 1.5,
+			'stroke-opacity': 0.5
+		}
+	}
+
 	self.data = sets.data
 	self.title = sets.title
 	self.color = sets.color
@@ -35,14 +48,14 @@ var Histogram = function(sets){
 						// 	.attr('height', 100)
 						// 	.attr('width', 360)
 						// 	.attr('stroke', 'black')
-						// 	.attr('stroke-width', '3px')
+						// 	.attr('stroke-width', border_settings['mouseenter']['stroke-width'])
 						// 	.attr('fill-opacity', 0)
 						// 	.attr('class', 'box')
 
 						//change the border width of the subnat your histogram is of
 						var shapeId = '#' + obj.context.id.replace('-svg', '')
-						d3.selectAll(shapeId).style('stroke-width', 2)
-							.style('stroke-opacity', 1)
+					d3.selectAll(shapeId).style('stroke-width', border_settings['mouseenter']['stroke-width'])
+							.style('stroke-opacity', border_settings['mouseenter']['stroke-opacity'])
 				})
 				.on('mouseleave', function(d){ 
 						//make the box go away
@@ -50,8 +63,8 @@ var Histogram = function(sets){
 						//d3.selectAll('.box').remove()
 						//change the border widths back
 						var shapeId = '#' + obj.context.id.replace('-svg', '')
-						d3.selectAll(shapeId).style('stroke-width', 0.2)
-							.style('stroke-opacity', 0.5)
+					d3.selectAll(shapeId).style('stroke-width', border_settings['default']['stroke-width'])
+							.style('stroke-opacity', border_settings['default']['stroke-opacity'])
 					})
 
 	//create scales that both the axes and the rects will use for sizing
@@ -158,14 +171,16 @@ Histogram.prototype.draw = function() {
 	self.rects.enter().append('rect').call(self.rectFeatures)
 			.on('mouseenter', function(d){  //make border thicker on mouseover
 				var obj = $(this)
-				obj.context.style['stroke'] = 'black'
-				obj.context.style['stroke-width'] = 2
-				obj.context.style['stroke-opacity'] = 1
+				//obj.context.style['stroke'] = 'black'
+				//obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
+				//obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
+				obj.context.style['fill-opacity'] = 1
 			})
 			.on('mouseleave', function(d){ //make border thinner when mouse leaves
 				var obj = $(this)
-				obj.context.style['stroke-width'] = 0
-				obj.context.style['stroke-opacity'] = 0
+				//obj.context.style['stroke-width'] = 0
+				//obj.context.style['stroke-opacity'] = 0
+				obj.context.style['fill-opacity'] = 0.5
 			})
 
 	self.rects.exit().remove()
@@ -205,8 +220,8 @@ EbolaView.prototype.prepData = function(){
 								  'fullName': 'Guinea'
 								},
 						  'SLE': {'color':'olive',
-						  	  	  'fullName': 'Sierra Leone'
-						  	  	},
+								  'fullName': 'Sierra Leone'
+								},
 						  'LBR': {'color': 'firebrick',
 								  'fullName': 'Liberia'}
 								}
@@ -240,7 +255,7 @@ EbolaView.prototype.prepData = function(){
 		var cases = initial_data[d]
 		alldata.push.apply(alldata, cases)
 		if (!cases) {
-		    return;
+			return;
 		}
 		var obs = cases.length
 		var data = []

@@ -62,26 +62,34 @@
 ///PLOTTING
 //////////////////
 
-	//assign names to national paths
-		var national_settings = [{'iso3':'GIN',
-								  'fullName': 'Guinea',
-								  'color': 'navy'},
-								{'iso3':'LBR',
-								  'fullName': 'Liberia',
-								  'color': 'firebrick'},
-								{'iso3':'SLE',
-								 'fullName': 'Sierra Leone',
-								  'color': 'olive'}]
+		//assign names to national paths
+		var national_settings = [{
+			'iso3': 'GIN',
+			'fullName': 'Guinea',
+			'color': 'navy'
+		},
+		{
+			'iso3': 'LBR',
+			'fullName': 'Liberia',
+			'color': 'firebrick'
+		},
+		{
+			'iso3': 'SLE',
+			'fullName': 'Sierra Leone',
+			'color': 'olive'
+		}]
 
-			//default and mouseover values for boundaries
-		var border_settings = {'default': {'stroke-width': 0.2,
-											'stroke-opacity': 0.5
-											},
-								'mouseenter': {'stroke-width': 2,
-											'stroke-opacity': 1
-											}
-
-								}
+		//default and mouseover values for boundaries
+		var border_settings = {
+			'default': {
+				'stroke-width': 0.2,
+				'stroke-opacity': 0.5
+			},
+			'mouseenter': {
+				'stroke-width': 1.5,
+				'stroke-opacity': 0.5
+			}
+		}
 
 
 	// We need to do a couple of things with this data before we map:
@@ -192,13 +200,16 @@
 						var obj = $(this)
 						//make a box around the histogram of the district you're on
 						var svgId = '#' + obj.context.id + '-svg'
+
+						// TODO: change axes to darker color instead?
 						d3.select(svgId).append('rect')
 							.attr('height', 100)
 							.attr('width', 360)
 							.attr('stroke', 'black')
-							.attr('stroke-width', '3px')
+							.attr('stroke-width', border_settings['default']['stroke-width'])
 							.attr('fill-opacity', 0)
 							.attr('class', 'box')
+
 						//change the border width of the subnat you're on
 						obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
 						obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
@@ -256,16 +267,19 @@
 			.attr('d', path)
 		  .on('click', showSubnats)
 		.on('mouseenter', function(d){  //make border thicker on mouseover
-					var obj = $(this)
+		    var obj = $(this)
+
+		    // TODO: change axes to darker color instead?
 					//make a box around the histogram of the district you're on
 					var svgId = '#' + obj.context.id + '-svg'
 					d3.select(svgId).append('rect')
 						.attr('height', 100)
 						.attr('width', 360)
 						.attr('stroke', 'black')
-						.attr('stroke-width', '3px')
+						.attr('stroke-width', border_settings['mouseenter']['stroke-width'])
 						.attr('fill-opacity', 0)
 						.attr('class', 'box')
+
 					//change the border width of the subnat you're on
 					obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
 					obj.context.style['stroke-opacity'] = border_settings['mouseenter']['stroke-opacity']
