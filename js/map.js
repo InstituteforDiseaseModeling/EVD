@@ -87,7 +87,7 @@
 			},
 			'mouseenter': {
 				'stroke-width': 1.5,
-				'stroke-opacity': 0.5
+				'stroke-opacity': 0.6
 			}
 		}
 
@@ -198,17 +198,9 @@
 					.attr('d', path)
 					.on('mouseenter', function(d){  //make border thicker on mouseover
 						var obj = $(this)
-						//make a box around the histogram of the district you're on
+						//highlight histogram you're working on
 						var svgId = '#' + obj.context.id + '-svg'
-
-						// TODO: change axes to darker color instead?
-						d3.select(svgId).append('rect')
-							.attr('height', 100)
-							.attr('width', 360)
-							.attr('stroke', 'black')
-							.attr('stroke-width', border_settings['default']['stroke-width'])
-							.attr('fill-opacity', 0)
-							.attr('class', 'box')
+						d3.select(svgId).selectAll('rect').style('fill-opacity', 1)
 
 						//change the border width of the subnat you're on
 						obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
@@ -216,7 +208,8 @@
 					})
 					.on('mouseleave', function(d){ //make border thinner when mouse leaves, get rid of histogram box
 						var obj = $(this)
-						d3.selectAll('.box').remove()
+						var svgId = '#' + obj.context.id + '-svg'
+						d3.select(svgId).selectAll('rect').style('fill-opacity', 0.5)
 						obj.context.style['stroke-width'] = border_settings['default']['stroke-width']
 						obj.context.style['stroke-opacity'] = border_settings['default']['stroke-opacity']
 					})
@@ -267,18 +260,11 @@
 			.attr('d', path)
 		  .on('click', showSubnats)
 		.on('mouseenter', function(d){  //make border thicker on mouseover
-		    var obj = $(this)
+			var obj = $(this)
 
-		    // TODO: change axes to darker color instead?
-					//make a box around the histogram of the district you're on
+					//highlight histogram you're working on
 					var svgId = '#' + obj.context.id + '-svg'
-					d3.select(svgId).append('rect')
-						.attr('height', 100)
-						.attr('width', 360)
-						.attr('stroke', 'black')
-						.attr('stroke-width', border_settings['mouseenter']['stroke-width'])
-						.attr('fill-opacity', 0)
-						.attr('class', 'box')
+					d3.select(svgId).selectAll('rect').style('fill-opacity',1)
 
 					//change the border width of the subnat you're on
 					obj.context.style['stroke-width'] = border_settings['mouseenter']['stroke-width']
@@ -286,7 +272,8 @@
 				})
 				.on('mouseleave', function(d){ //make border thinner when mouse leaves, get rid of histogram box
 					var obj = $(this)
-					d3.selectAll('.box').remove()
+					var svgId = '#' + obj.context.id + '-svg'
+					d3.select(svgId).selectAll('rect').style('fill-opacity', 0.5)
 					obj.context.style['stroke-width'] = border_settings['default']['stroke-width']
 					obj.context.style['stroke-opacity'] = border_settings['default']['stroke-opacity']
 				})

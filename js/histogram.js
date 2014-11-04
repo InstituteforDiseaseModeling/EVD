@@ -24,7 +24,7 @@ var Histogram = function(sets){
 		},
 		'mouseenter': {
 			'stroke-width': 1.5,
-			'stroke-opacity': 0.5
+			'stroke-opacity': 0.6
 		}
 	}
 
@@ -105,11 +105,11 @@ var Histogram = function(sets){
 
 	//position rects within svg
 	self.rectFeatures = function (rect) {
-		rect.attr('width', allScales['xWidth']) 
+		rect.attr('width', allScales['xWidth'])
 			.attr('height', function(d){return allScales['yScale'](d.cases)})
 			.attr('x', function(d){return (allScales['xScale'](d.id) + self.padding['xAxis']) })
 			.attr('y', function(d){return (self.height - self.padding['yAxis']) - allScales['yScale'](d.cases)})
-			.attr('id', function(d){return d.id})
+			.attr('id', function (d) { return d.id })
 			.style('fill', function(d){
 				if ( self.mapType=='subnational'){
 					return self.color
