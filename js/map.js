@@ -146,7 +146,7 @@
 		var showSubnats = function (d) {
 
 		//get properties of national value, load shapefile
-			var nat_name = $(this).attr('id')
+			var nat_name = $(this).attr('id').toUpperCase()
 			var nat_color = $(this).context.style.fill
 			var subnat_shape = topojson.feature(subnats, subnats.objects[nat_name + '_subnat']).features
 
@@ -180,7 +180,7 @@
 					.enter()
 					.append('path')
 					.attr('class', 'subnational' )
-					.attr('id', function (d, i) {return name_map[i].replace(/\s/g, '_').replace(/[()]/g, '')})
+					.attr('id', function (d, i) {return name_map[i].replace(/\s/g, '_').replace(/[()]/g, '').toLowerCase()})
 					.attr('district_name', function(d,i) {return name_map[i]})
 					.attr('parent_id', nat_name)
 					.style('fill', nat_color)
@@ -247,7 +247,7 @@
 			.enter()
 			.append('path')
 			.attr('class', function(d,i){return 'national' + ' ' + national_settings[i].fullName})
-			.attr('id', function(d,i){return national_settings[i].iso3})
+			.attr('id', function(d,i){return national_settings[i].iso3.toLowerCase()})
 			.style('fill', function(d,i){return national_settings[i].color})
 			.style('fill-opacity', 0.5)
 			.style('stroke', "#000")
@@ -280,7 +280,7 @@
 
 		//make national fill dependent on cumulative cases nationally
 		national_paths.style('fill', function(d,i){
-			var nat_name = $(this).attr('id')
+			var nat_name = $(this).attr('id').toUpperCase()
 			var base_color = national_settings[i]['color']
 			var nat_cases = d3.sum(national_cases[nat_name])
 			var nat_color_scale = d3.scale.linear().range(['white', base_color]).domain([0, national_max])
@@ -292,7 +292,7 @@
 	//set up inputs for national map poshytip
 		var natIdentifier = '#map-g .national'
 		var natContentFunction = function(d){
-			var natName = $(this).attr('id') // iso3 for pulling case count
+			var natName = $(this).attr('id').toUpperCase() // iso3 for pulling case count
 			var fullName = $(this).attr('class') // full name for pretty poshytip
 			fullName = fullName.replace('national ', '') 
 			var cases = national_cases['Cumulative'][natName] //cumulative case count
