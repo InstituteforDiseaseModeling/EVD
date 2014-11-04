@@ -27,34 +27,34 @@ var Histogram = function(sets){
 				 .attr('class','case-hist')
 				 .style('width', self.width)
 				 .style('height', self.height)
-				.on('mouseenter', function(d){
-						var obj = $(this)
-						//make a box around the histogram you're on
-						var svgId = '#' + obj.context.id
-						d3.select(svgId).append('rect')
-							.attr('height', 100)
-							.attr('width', 360)
-							.attr('stroke', 'black')
-							.attr('stroke-width', '3px')
-							.attr('fill-opacity', 0)
-							.attr('class', 'box')
+				// .on('mouseenter', function(d){
+				// 		var obj = $(this)
+				// 		//make a box around the histogram you're on
+				// 		var svgId = '#' + obj.context.id
+				// 		d3.select(svgId).append('rect')
+				// 			.attr('height', 100)
+				// 			.attr('width', 360)
+				// 			.attr('stroke', 'black')
+				// 			.attr('stroke-width', '3px')
+				// 			.attr('fill-opacity', 0)
+				// 			.attr('class', 'box')
 
-						//change the border width of the subnat your histogram is of
-						var shapeId = '#' + obj.context.id.replace('-svg', '')
-						d3.select('shapeId').style('stroke-width', 2)
-							.style('stroke-opacity', 1)
-						//console.log(shapeId, d3.select('shapeId'))
-				})
-				.on('mouseleave', function(d){ 
-						//make the box go away
-						var obj = $(this)
-						d3.selectAll('.box').remove()
-						//change the border widths back
-						var shapeId = '#' + obj.context.id.replace('-svg', '')
-						d3.select('shapeId').style('stroke-width', 0.2)
-							.style('stroke-opacity', 0.5)
+				// 		//change the border width of the subnat your histogram is of
+				// 		var shapeId = '#' + obj.context.id.replace('-svg', '')
+				// 		d3.select('shapeId').style('stroke-width', 2)
+				// 			.style('stroke-opacity', 1)
+				// 		//console.log(shapeId, d3.select('shapeId'))
+				// })
+				// .on('mouseleave', function(d){ 
+				// 		//make the box go away
+				// 		var obj = $(this)
+				// 		d3.selectAll('.box').remove()
+				// 		//change the border widths back
+				// 		var shapeId = '#' + obj.context.id.replace('-svg', '')
+				// 		d3.select('shapeId').style('stroke-width', 0.2)
+				// 			.style('stroke-opacity', 0.5)
 
-					})
+				// 	})
 
 	//create scales that both the axes and the rects will use for sizing
 	var allScales = {}
