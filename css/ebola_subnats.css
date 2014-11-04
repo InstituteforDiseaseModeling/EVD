@@ -1,6 +1,7 @@
 body{
 	/*background-color:#efefef;*/
 	background-color:white;
+	padding: 10px;
 }
 
 svg {
@@ -60,5 +61,11 @@ svg {
 
 .axis text.district-text {
 	font-weight: bold;
+	fill: #403e3e;
+}
+
+#signature-g text {
+	/*font-weight: bold;*/
+	font-size:smaller;
 	fill: #403e3e;
 }

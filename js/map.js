@@ -35,9 +35,9 @@
 
 		//function to get the first element of an object
 		var firstElem = function(obj) {
-		    for (var key in obj) {
-		        if (obj.hasOwnProperty(key)) return key;
-		    }
+			for (var key in obj) {
+				if (obj.hasOwnProperty(key)) return key;
+			}
 		}
 
 
@@ -128,7 +128,7 @@
 					}
 					return subnat_data[d][j]
 				})
-			    national_cases[nat_name][j] = d3.sum(element_j)
+				national_cases[nat_name][j] = d3.sum(element_j)
 			} //end subnat loop
 		} //end national loop
  
@@ -255,7 +255,7 @@
 			.style('stroke-opacity', 0.5)
 			.attr('d', path)
 		  .on('click', showSubnats)
-	  	.on('mouseenter', function(d){  //make border thicker on mouseover
+		.on('mouseenter', function(d){  //make border thicker on mouseover
 					var obj = $(this)
 					//make a box around the histogram of the district you're on
 					var svgId = '#' + obj.context.id + '-svg'
@@ -314,37 +314,33 @@
 				 .attr('id', 'signature-g')
 				 .attr('width', 300)
 				 .attr('height', 200)
-				 .attr('transform', 'translate(' + document.getElementById('full-svg').clientWidth/12 +  ',' + 500 +')'  )
+				 .attr('transform', 'translate(' + document.getElementById('full-svg').clientWidth/20 +  ',' + 550 +')'  )
 
 
-	var nameList = ['Amelia Bertozzi-Villa', 'Edward Wenger', 'Hao Hu']
+	var nameList = ['Credits: Amelia Bertozzi-Villa, Edward Wenger, Hao Hu']
 	signatureG.selectAll('text')
 			  .data(nameList)
 			  .enter()
 			  .append('text')
-			  .text(function(d){return d})
-			  .attr('transform', function(d,i) {return 'translate(0, ' + (i*20+20) + ')'})
-			  .style('font-weight', 'bold')
+			  .text(function (d) { return d })
+			  .attr('transform', function (d, i) { return 'translate(0, ' + (i * 20 + 20) + ')' })
+			  .attr('class','signature-names')
 
 	signatureG.append('svg:a')
 			.attr('width', 300)
 			.attr('height', 100)
-			.attr('transform', 'translate(0, 80)')
-			.attr('id', 'idm-link')
-			 .attr('xlink:href', 'http://idmod.org')
-			 .attr('target', '_blank')
-			 .append('text')
-			 .text('Institute for Disease Modeling')
-			 .style('text-decoration', 'underline')
+			.attr('transform', 'translate(0, 40)')
+			.attr('xlink:href', 'http://idmod.org')
+			.attr('target', '_blank')
+			.append('text')
+			.text('Institute for Disease Modeling')
 
 	signatureG.append('svg:a')
 		.attr('width', 300)
 		.attr('height', 100)
-		.attr('transform', 'translate(0, 100)')
-		.attr('id', 'data-link')
-		 .attr('xlink:href', 'http://reliefweb.int/')
-		 .attr('target', '_blank')
-		 .append('text')
-		 .text('Data from Situation Reports')
-		 .style('text-decoration', 'underline')
+		.attr('transform', 'translate(0, 75)')
+		.attr('xlink:href', 'http://www.humanitarianresponse.info/search/disasters/33204/document-type/situation-report')
+		.attr('target', '_blank')
+		.append('text')
+		.text('Data from cumulative case counts in Situation Reports')
 
