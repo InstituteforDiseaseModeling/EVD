@@ -43,6 +43,10 @@ svg {
 	width: 360px;
 }
 
+#full-svg{
+	position: fixed;
+}
+
 .title{
 	text-align: center;
 }
