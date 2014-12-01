@@ -8,9 +8,9 @@ var Histogram = function(sets){
 	var self = this
 	self.height = 100
 	self.width = 360
-	self.padding = { 'xAxis': 35,
+	self.padding = { 'xAxis': 5,
 					 'yAxis': 25,
-					 'rightEdge': 15,
+					 'rightEdge': 5,
 					 'topEdge': 5
 					}
 
@@ -70,7 +70,7 @@ var Histogram = function(sets){
 	//create scales that both the axes and the rects will use for sizing
 	var allScales = {}
 	allScales['xScale'] =  d3.scale.linear()
-									.domain([0, d3.max(self.data, function(d){return d.id})])
+									.domain([0, 1+d3.max(self.data, function(d){return d.id})])
 									.range([0, self.width-self.padding['xAxis'] - self.padding['rightEdge']])
 	
 	allScales['yScale'] =  d3.scale.linear()
@@ -85,7 +85,7 @@ var Histogram = function(sets){
 
 	// convert 52 week numeric scale to months for x-axis labeling
 	allScales['timeScale'] = d3.time.scale()
-		.domain([new Date(2012, 0, 1), new Date(2012, 11, 31)])
+		.domain([new Date(2014, 0, 1), new Date(2014, 11, 31)])
 		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
 
 	//get x-and y-axis set up
