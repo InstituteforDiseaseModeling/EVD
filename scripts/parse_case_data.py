@@ -8,8 +8,8 @@ def week_of_date(date_input):
     weekno =  date_object.isocalendar()[1]
     year = date_object.isocalendar()[0]
     if year == 2015:
-	    weekno = weekno + 52
-    return weekno
+        weekno = weekno + 52
+    return weekno - 5 #shifting the ranges to Feb 2014 - Jan 2015
 
 def read_case_counts(csv_file):
     case_counts={}
@@ -19,18 +19,19 @@ def read_case_counts(csv_file):
         fields=[f.replace("'","") for f in header]
         print(fields[1:])
         for district in fields[1:]:
-		case_counts[district]=[0 for w in range(58)] ##TODO: remove hard coded weeks here
+		case_counts[district]=[0 for w in range(52)] ##TODO: remove hard coded weeks here
         for row in reader:
             date=row[0]
             week=week_of_date(date)
             print(date,week)
-            for col in range(1,len(fields)):
-                cases=row[col]
-                #print(col,cases)
-                if cases:
-                    #print(fields[col],week-1,int(float(cases)))
-                    case_counts[fields[col]][week-1]+=int(float(cases))
-                    #print(case_counts[fields[col]][week-1])
+	    if week >0:
+                for col in range(1,len(fields)):
+                    cases=row[col]
+                    #print(col,cases)
+                    if cases:
+                        #print(fields[col],week-1,int(float(cases)))
+                        case_counts[fields[col]][week-1]+=int(float(cases))
+                        #print(case_counts[fields[col]][week-1])
 
          # cumulative counts
         for dist,counts in case_counts.items():
