@@ -5,7 +5,11 @@ from datetime import datetime
 
 def week_of_date(date_input):
     date_object = datetime.strptime(date_input, '%m/%d/%Y')
-    return date_object.isocalendar()[1]
+    weekno =  date_object.isocalendar()[1]
+    year = date_object.isocalendar()[0]
+    if year == 2015:
+	    weekno = weekno + 52
+    return weekno
 
 def read_case_counts(csv_file):
     case_counts={}
@@ -15,7 +19,7 @@ def read_case_counts(csv_file):
         fields=[f.replace("'","") for f in header]
         print(fields[1:])
         for district in fields[1:]:
-            case_counts[district]=[0 for w in range(52)]
+		case_counts[district]=[0 for w in range(58)] ##TODO: remove hard coded weeks here
         for row in reader:
             date=row[0]
             week=week_of_date(date)
