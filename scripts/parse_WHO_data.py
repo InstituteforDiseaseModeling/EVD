@@ -10,6 +10,8 @@ def read_case_counts(csv_file,sources=[]):
     with open(os.path.join('..','data',csv_file),'rb') as f:
         cases=pd.read_csv(f)
 
+    cases=cases.dropna(subset=['Location'])
+    
     cases['Epi week']=cases['Epi week'].map(format_time_span)
 
     # Select sources to compare
