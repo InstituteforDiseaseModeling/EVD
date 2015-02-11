@@ -1,0 +1,433 @@
+{
+  "Nodes": [
+    {
+      "NodeAttributes": {
+        "Latitude": 7.5528945665832, 
+        "InitialPopulation": 93921.79037, 
+        "Longitude": -10.5608525739331
+      }, 
+      "NodeID": 266471718
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.00405261226188, 
+        "InitialPopulation": 195688.4442, 
+        "Longitude": -8.26591239009452
+      }, 
+      "NodeID": 270076209
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.67306597241606, 
+        "InitialPopulation": 401422.1478, 
+        "Longitude": -11.9758021497337
+      }, 
+      "NodeID": 264243521
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.31378191579572, 
+        "InitialPopulation": 1117220.845, 
+        "Longitude": -10.7607184537979
+      }, 
+      "NodeID": 266144008
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.89444828341325, 
+        "InitialPopulation": 582096.001, 
+        "Longitude": -11.1639422540744
+      }, 
+      "NodeID": 265554222
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.6237528739893, 
+        "InitialPopulation": 655992.2568, 
+        "Longitude": -10.3888699975084
+      }, 
+      "NodeID": 266733887
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.8339922200882, 
+        "InitialPopulation": 428048.8711, 
+        "Longitude": -14.7507813493833
+      }, 
+      "NodeID": 259852661
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.34216087217439, 
+        "InitialPopulation": 239141.2066, 
+        "Longitude": -9.16510979917039
+      }, 
+      "NodeID": 268699985
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.0471349733829, 
+        "InitialPopulation": 440320.0621, 
+        "Longitude": -12.6623054789345
+      }, 
+      "NodeID": 263194978
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.290168433629, 
+        "InitialPopulation": 423981.8095, 
+        "Longitude": -13.1491181087749
+      }, 
+      "NodeID": 262408503
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 4.42362020178114, 
+        "InitialPopulation": 129415.0595, 
+        "Longitude": -7.70256489222943
+      }, 
+      "NodeID": 270993627
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.27852711832332, 
+        "InitialPopulation": 357734.9162, 
+        "Longitude": -13.3171507314267
+      }, 
+      "NodeID": 262146383
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.59055023196973, 
+        "InitialPopulation": 517555.8001, 
+        "Longitude": -13.0594798847055
+      }, 
+      "NodeID": 262539583
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.14098299436766, 
+        "InitialPopulation": 311522.261, 
+        "Longitude": -9.90980758167383
+      }, 
+      "NodeID": 267520308
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.88598021349362, 
+        "InitialPopulation": 353418.6077, 
+        "Longitude": -8.7969437331932
+      }, 
+      "NodeID": 269224238
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.92047289915687, 
+        "InitialPopulation": 540688.0919, 
+        "Longitude": -11.737379975261
+      }, 
+      "NodeID": 264636719
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.08447724302674, 
+        "InitialPopulation": 257789.491, 
+        "Longitude": -11.6670661386707
+      }, 
+      "NodeID": 264702235
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.74525942192019, 
+        "InitialPopulation": 351673.5871, 
+        "Longitude": -13.4572029768008
+      }, 
+      "NodeID": 261949786
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.5739242342436, 
+        "InitialPopulation": 184370.4561, 
+        "Longitude": -10.138450343701
+      }, 
+      "NodeID": 267127150
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.79113645066363, 
+        "InitialPopulation": 202811.9444, 
+        "Longitude": -8.1687035816364
+      }, 
+      "NodeID": 270207299
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.19458334370688, 
+        "InitialPopulation": 256906.8446, 
+        "Longitude": -10.0612584836377
+      }, 
+      "NodeID": 267258189
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.45406729219566, 
+        "InitialPopulation": 270140.6547, 
+        "Longitude": -9.1453433819079
+      }, 
+      "NodeID": 268699939
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.1198218120164, 
+        "InitialPopulation": 183471.0171, 
+        "Longitude": -14.1170777648878
+      }, 
+      "NodeID": 260901219
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.82145618426963, 
+        "InitialPopulation": 141864.6175, 
+        "Longitude": -11.2831775769993
+      }, 
+      "NodeID": 265357588
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.9108063786286, 
+        "InitialPopulation": 244225.6227, 
+        "Longitude": -13.3767548725659
+      }, 
+      "NodeID": 262015350
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 5.20636794609053, 
+        "InitialPopulation": 89715.09007, 
+        "Longitude": -7.59386881981167
+      }, 
+      "NodeID": 271124717
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 4.60300583170446, 
+        "InitialPopulation": 67031.13816, 
+        "Longitude": -8.21678257805805
+      }, 
+      "NodeID": 270141663
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.33506574576029, 
+        "InitialPopulation": 304269.1165, 
+        "Longitude": -11.2961495832701
+      }, 
+      "NodeID": 265292113
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.12691758130353, 
+        "InitialPopulation": 401470.209, 
+        "Longitude": -10.6409589724688
+      }, 
+      "NodeID": 266340660
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.79939271322258, 
+        "InitialPopulation": 175686.9034, 
+        "Longitude": -10.7023764623171
+      }, 
+      "NodeID": 266275164
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.94217802682241, 
+        "InitialPopulation": 298166.9923, 
+        "Longitude": -12.7887838284318
+      }, 
+      "NodeID": 262998319
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.94809837694148, 
+        "InitialPopulation": 305219.8262, 
+        "Longitude": -13.12855150202
+      }, 
+      "NodeID": 262408519
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.29508939403996, 
+        "InitialPopulation": 467597.894, 
+        "Longitude": -12.2062151923465
+      }, 
+      "NodeID": 263915856
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.9840670698309, 
+        "InitialPopulation": 535747.5919, 
+        "Longitude": -8.61815241299632
+      }, 
+      "NodeID": 269551896
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.33117002701366, 
+        "InitialPopulation": 455784.9428, 
+        "Longitude": -9.44971806767456
+      }, 
+      "NodeID": 268241208
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.93080653333, 
+        "InitialPopulation": 249405.5986, 
+        "Longitude": -12.5938744562791
+      }, 
+      "NodeID": 263260535
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.12765659394209, 
+        "InitialPopulation": 364173.5722, 
+        "Longitude": -9.53326082303189
+      }, 
+      "NodeID": 268110108
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 11.7955668414161, 
+        "InitialPopulation": 166385.3597, 
+        "Longitude": -10.6175927010942
+      }, 
+      "NodeID": 266406284
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.9124938228661, 
+        "InitialPopulation": 170562.5386, 
+        "Longitude": -12.1620764142362
+      }, 
+      "NodeID": 263981430
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 10.8036712286268, 
+        "InitialPopulation": 148852.6649, 
+        "Longitude": -10.9508898785297
+      }, 
+      "NodeID": 265881972
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 11.9365124056548, 
+        "InitialPopulation": 396654.1441, 
+        "Longitude": -9.4403078013477
+      }, 
+      "NodeID": 268241295
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.68366817624625, 
+        "InitialPopulation": 457889.1694, 
+        "Longitude": -10.8622446057562
+      }, 
+      "NodeID": 266012993
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.19712317360841, 
+        "InitialPopulation": 329711.7832, 
+        "Longitude": -10.4840393529976
+      }, 
+      "NodeID": 266602757
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.97317819313931, 
+        "InitialPopulation": 351315.7782, 
+        "Longitude": -8.98339361251756
+      }, 
+      "NodeID": 268962144
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.50758588145515, 
+        "InitialPopulation": 128281.8661, 
+        "Longitude": -10.9175218536714
+      }, 
+      "NodeID": 265881869
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 5.44319518888042, 
+        "InitialPopulation": 79468.36461, 
+        "Longitude": -9.55488197319055
+      }, 
+      "NodeID": 268044531
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 5.8540435840744, 
+        "InitialPopulation": 240617.3572, 
+        "Longitude": -10.0203544706231
+      }, 
+      "NodeID": 267323645
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.54020702113337, 
+        "InitialPopulation": 1425714.856, 
+        "Longitude": -13.6945034878789
+      }, 
+      "NodeID": 261556565
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 9.84328978297153, 
+        "InitialPopulation": 154383.5513, 
+        "Longitude": -13.6664471525949
+      }, 
+      "NodeID": 261622109
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 7.51380919905653, 
+        "InitialPopulation": 151348.4941, 
+        "Longitude": -12.568823213736
+      }, 
+      "NodeID": 263325989
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 5.0426335202701, 
+        "InitialPopulation": 108749.0666, 
+        "Longitude": -9.06921931587341
+      }, 
+      "NodeID": 268830954
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 8.46607679766595, 
+        "InitialPopulation": 686312.4237, 
+        "Longitude": -13.2666664062032
+      }, 
+      "NodeID": 262211900
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.04766448314793, 
+        "InitialPopulation": 139434.4274, 
+        "Longitude": -7.97048234117341
+      }, 
+      "NodeID": 270534914
+    }
+  ], 
+  "Metadata": {
+    "NodeCount": 53, 
+    "IdReference": "Gridded world grump2.5arcmin", 
+    "Author": "ewenger"
+  }
+}
