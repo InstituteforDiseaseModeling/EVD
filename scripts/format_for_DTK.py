@@ -5,7 +5,9 @@ import struct
 import json
 import math
 
-iso_countries={'GIN':'guinee','SLE':'sierra_leone','LBR':'liberia'}
+iso_countries={'GIN':'guinee','SLE':'sierra_leone','LBR':'liberia',
+               'NGA':'nigeria','SEN':'senegal','MLI':'mali',
+               'USA':'usa','GBR':'uk','ESP':'spain'}
 
 alt_names={'Kissidougou':'Kisidougou',
            'Nzerekore':'N\'Zerekore',
@@ -18,6 +20,34 @@ alt_names={'Kissidougou':'Kisidougou',
            'Western Urban':'Western (urban)',
            'Western Rural':'Western (rural)',
            }
+
+additional_nodes={'Lagos':{'Latitude':6.583333,
+                           'Longitude':3.75,
+                           'InitialPopulation':9019534},
+                  'Rivers':{'Latitude':4.75,
+                           'Longitude':6.833333,
+                           'InitialPopulation':5185400},
+                  'Dakar':{'Latitude':14.692778,
+                           'Longitude':-17.446667,
+                           'InitialPopulation':2396800},
+                  'Kayes':{'Latitude':14.45,
+                           'Longitude':-11.433333,
+                           'InitialPopulation':127368},
+                  'Bamako':{'Latitude':12.65,
+                           'Longitude':-8,
+                           'InitialPopulation':1809106},
+                  'Dallas':{'Latitude':32.775833,
+                           'Longitude':-96.796667,
+                           'InitialPopulation':6810913},
+                  'New York':{'Latitude':40.7127,
+                           'Longitude':-74.0059,
+                           'InitialPopulation':8405837},
+                  'Madrid':{'Latitude':40.5,
+                           'Longitude':-3.6666,
+                           'InitialPopulation':6489680},
+                  'Glasgow':{'Latitude':55.858,
+                           'Longitude':-4.259,
+                           'InitialPopulation':1750000}}
 
 resolution = 2.5/60   # 2.5 arcmin
 #resolution = 30.0/3600 # 30 arcsec
@@ -67,13 +97,15 @@ def get_nodes():
         if district in alt_names:
             district=alt_names[district]
         nodes[district]={k:n[k] for k in node_info}
+    nodes.update(additional_nodes)
     return nodes
 
 if __name__ == '__main__':
     all_counts=get_all_counts()
     converted = all_counts.asfreq('D', method='bfill')
     all_counts=pd.ewma(converted,span=21)
-    #print(all_counts.head())
+    all_counts[all_counts<0.2]=0 # smoothing makes single cases somewhat < 1
+    #print(all_counts['Kailahun'].to_string())
     #all_counts[['Montserrado','Conakry','Kailahun']].plot()
     #plt.show()
 

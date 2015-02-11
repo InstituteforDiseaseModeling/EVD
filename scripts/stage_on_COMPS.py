@@ -10,7 +10,8 @@ configstr = json.dumps( config_params, sort_keys=True, indent=4 )
 
 from dtk.utils.core.DTKSetupParser import DTKSetupParser
 setup=DTKSetupParser()
-Client.Login(setup.get('HPC','server_endpoint'))
+Client.Login(setup.get('HPC','server_endpoint')) # COMPS
+#Client.Login('https://comps2.idmod.org') # COMPS2 (staging)
 
 input_path = os.path.join(setup.get('HPC','input_root'), 'ebola')
 print(input_path)
@@ -35,13 +36,21 @@ s.Save()
 
 sim_id=s.getId().toString()
 print('sim ID = %s' % sim_id)
-sim_id=hex(int(sim_id[:3],16)+32)[-3:]+sim_id[3:]
-sim_id_flat=sim_id.replace('-','')
 s.Commission()
-workdir=os.path.join(sim_root,sim_id_flat[:3],sim_id_flat[3:6],sim_id_flat[6:9],sim_id)
+def get_HPCJobs():
+    s.Refresh(QueryCriteria().Select('Id').SelectChildren('HPCJobs'))
+    return s.getHPCJobs()
+A=get_HPCJobs()
+while not A:
+    time.sleep(1)
+    print('.'),
+    A=get_HPCJobs()
+workdir=A.toArray()[-1].getWorkingDirectory() 
+
 print('HPCJobs.WorkingDirectory = %s' % workdir)
 while not os.path.exists(workdir):
-    time.sleep(0.1)
+    time.sleep(1)
+    print('.'),
 output_path=os.path.join(workdir,'output')
 os.mkdir(output_path)
 shutil.copy('SpatialReport_EbolaCases.bin',output_path)

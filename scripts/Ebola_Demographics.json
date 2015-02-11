@@ -34,6 +34,22 @@
     }, 
     {
       "NodeAttributes": {
+        "Latitude": 32.775833, 
+        "InitialPopulation": 6810913, 
+        "Longitude": -96.796667
+      }, 
+      "NodeID": 130812803
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 14.692778, 
+        "InitialPopulation": 2396800, 
+        "Longitude": -17.446667
+      }, 
+      "NodeID": 255658449
+    }, 
+    {
+      "NodeAttributes": {
         "Latitude": 7.89444828341325, 
         "InitialPopulation": 582096.001, 
         "Longitude": -11.1639422540744
@@ -98,6 +114,14 @@
     }, 
     {
       "NodeAttributes": {
+        "Latitude": 55.858, 
+        "InitialPopulation": 1750000, 
+        "Longitude": -4.259
+      }, 
+      "NodeID": 276368813
+    }, 
+    {
+      "NodeAttributes": {
         "Latitude": 8.59055023196973, 
         "InitialPopulation": 517555.8001, 
         "Longitude": -13.0594798847055
@@ -119,6 +143,22 @@
         "Longitude": -8.7969437331932
       }, 
       "NodeID": 269224238
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 4.75, 
+        "InitialPopulation": 5185400, 
+        "Longitude": 6.833333
+      }, 
+      "NodeID": 293800163
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 14.45, 
+        "InitialPopulation": 127368, 
+        "Longitude": -11.433333
+      }, 
+      "NodeID": 265095627
     }, 
     {
       "NodeAttributes": {
@@ -159,6 +199,14 @@
         "Longitude": -8.1687035816364
       }, 
       "NodeID": 270207299
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 6.583333, 
+        "InitialPopulation": 9019534, 
+        "Longitude": 3.75
+      }, 
+      "NodeID": 289016078
     }, 
     {
       "NodeAttributes": {
@@ -290,6 +338,22 @@
     }, 
     {
       "NodeAttributes": {
+        "Latitude": 12.65, 
+        "InitialPopulation": 1809106, 
+        "Longitude": -8
+      }, 
+      "NodeID": 270535072
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 40.7127, 
+        "InitialPopulation": 8405837, 
+        "Longitude": -74.0059
+      }, 
+      "NodeID": 166661186
+    }, 
+    {
+      "NodeAttributes": {
         "Latitude": 7.12765659394209, 
         "InitialPopulation": 364173.5722, 
         "Longitude": -9.53326082303189
@@ -335,6 +399,14 @@
         "Longitude": -10.8622446057562
       }, 
       "NodeID": 266012993
+    }, 
+    {
+      "NodeAttributes": {
+        "Latitude": 40.5, 
+        "InitialPopulation": 6489680, 
+        "Longitude": -3.6666
+      }, 
+      "NodeID": 277351485
     }, 
     {
       "NodeAttributes": {
@@ -426,7 +498,7 @@
     }
   ], 
   "Metadata": {
-    "NodeCount": 53, 
+    "NodeCount": 62, 
     "IdReference": "Gridded world grump2.5arcmin", 
     "Author": "ewenger"
   }
