@@ -40,8 +40,8 @@ sim_id_flat=sim_id.replace('-','')
 s.Commission()
 workdir=os.path.join(sim_root,sim_id_flat[:3],sim_id_flat[3:6],sim_id_flat[6:9],sim_id)
 print('HPCJobs.WorkingDirectory = %s' % workdir)
-time.sleep(3)
-if os.path.exists(workdir):
-    output_path=os.path.join(workdir,'output')
-    os.mkdir(output_path)
-    shutil.copy('SpatialReport_EbolaCases.bin',output_path)
+while not os.path.exists(workdir):
+    time.sleep(0.1)
+output_path=os.path.join(workdir,'output')
+os.mkdir(output_path)
+shutil.copy('SpatialReport_EbolaCases.bin',output_path)
