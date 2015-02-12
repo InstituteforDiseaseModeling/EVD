@@ -54,3 +54,4 @@ while not os.path.exists(workdir):
 output_path=os.path.join(workdir,'output')
 os.mkdir(output_path)
 shutil.copy('SpatialReport_EbolaCases.bin',output_path)
+shutil.copy('InsetChart.json',output_path)

@@ -81,6 +81,25 @@ def get_all_counts():
     all_counts[all_counts<0]=0
     return all_counts
 
+def smooth(counts):
+    converted = counts.asfreq('D', method='bfill')
+    smoothed = pd.ewma(converted,span=21)
+    return smoothed
+
+def aggregate(smoothed):
+    dfsum=smoothed.sum(axis=1)
+    df=pd.DataFrame(dfsum,columns=['EbolaCases'])
+    df['CumulativeEbolaCases']=dfsum.cumsum()
+    return df
+
+def write_inset_chart(channels):
+    header={'DateTime':str(datetime.datetime.now()),
+            'Timesteps':len(channels),
+            'Channels':len(channels.keys())}
+    data_channels={k:{'Units':'','Data':v.tolist()} for k,v in channels.iteritems()}
+    with open('InsetChart.json','w') as ic:
+        json.dump({'Header':header,'Channels':data_channels},ic,indent=2)
+
 def get_node_id(lat, lon):
     xpix = int(math.floor((lon + 180.0) / resolution))
     ypix = int(math.floor((lat + 90.0) / resolution))
@@ -102,12 +121,10 @@ def get_nodes():
 
 if __name__ == '__main__':
     all_counts=get_all_counts()
-    converted = all_counts.asfreq('D', method='bfill')
-    all_counts=pd.ewma(converted,span=21)
+    all_counts=smooth(all_counts)
     all_counts[all_counts<0.2]=0 # smoothing makes single cases somewhat < 1
-    #print(all_counts['Kailahun'].to_string())
-    #all_counts[['Montserrado','Conakry','Kailahun']].plot()
-    #plt.show()
+    channels=aggregate(all_counts)
+    write_inset_chart(channels)
 
     node_names=all_counts.keys()
     n_nodes=len(node_names)
