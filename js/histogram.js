@@ -242,7 +242,8 @@ EbolaView.prototype.prepData = function(){
 
 	//sorting districts by cumulative counts
 	try {
-		sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
+		//sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
+		sorted_keys=d3.keys(initial_data['Recent']).sort(function (a, b) { return -(initial_data['Recent'][a] - initial_data['Recent'][b]) });
 	}
 	catch (e) {
 		sorted_keys = d3.keys(initial_data)

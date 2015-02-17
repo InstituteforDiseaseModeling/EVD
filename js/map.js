@@ -131,7 +131,7 @@
 
 			for (j=0; j<week_count; j++) {
 				var element_j = d3.keys(subnat_data).map(function(d){
-					if ( (d=="Cumulative") || (d=="National") ){
+				    if ((d == "Recent") || (d == "Cumulative") || (d == "National")) {
 						return 0
 					}
 					return subnat_data[d][j]
