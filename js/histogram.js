@@ -230,7 +230,7 @@ EbolaView.prototype.prepData = function(){
 		var initial_data = all_case_data[self.iso3]
 		self.color = country_settings[self.iso3]['color']
 	}
-	else{
+	else {
 		var initial_data = national_cases
 		var country_colors = {}
 		d3.keys(country_settings).map(function(d){
@@ -242,8 +242,18 @@ EbolaView.prototype.prepData = function(){
 
 	//sorting districts by cumulative counts
 	try {
-		//sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
-		sorted_keys=d3.keys(initial_data['Recent']).sort(function (a, b) { return -(initial_data['Recent'][a] - initial_data['Recent'][b]) });
+	    if (self.mapType == 'subnational') {
+	        sorted_keys = d3.keys(initial_data['Recent']).sort(function (a, b) {
+	            recent_diff = -(initial_data['Recent'][a] - initial_data['Recent'][b])
+	            if (recent_diff != 0) {
+	                return recent_diff
+	            } else {
+	                return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b])
+	            }
+	        });
+	    } else {
+	        sorted_keys=d3.keys(initial_data['Cumulative']).sort(function (a, b) { return -(initial_data['Cumulative'][a] - initial_data['Cumulative'][b]) });
+	    }
 	}
 	catch (e) {
 		sorted_keys = d3.keys(initial_data)
