@@ -19,12 +19,12 @@ def read_case_counts(csv_file):
         fields=[f.replace("'","") for f in header]
         print(fields[1:])
         for district in fields[1:]:
-		case_counts[district]=[0 for w in range(52)] ##TODO: remove hard coded weeks here
+            case_counts[district]=[0 for w in range(52)] ##TODO: remove hard coded weeks here
         for row in reader:
             date=row[0]
             week=week_of_date(date)
             print(date,week)
-	    if week >0:
+            if week >0:
                 for col in range(1,len(fields)):
                     cases=row[col]
                     #print(col,cases)
@@ -37,8 +37,11 @@ def read_case_counts(csv_file):
         for dist,counts in case_counts.items():
             if 'Cumulative' not in case_counts:
                 case_counts['Cumulative']={}
+            if 'Recent' not in case_counts:
+                case_counts['Recent']={}
             #print(dist,counts)
             case_counts['Cumulative'][dist]=sum(counts)
+            case_counts['Recent'][dist]=sum(counts[-6:]) # last six weeks
 
     return case_counts
 
