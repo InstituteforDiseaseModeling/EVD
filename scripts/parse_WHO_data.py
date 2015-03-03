@@ -36,7 +36,7 @@ def get_ebola_counts_by_country(countries,sources=['Situation report','Patient d
     return cases
 
 if __name__=='__main__':
-    countries=['GIN','LBR']#'SLE'
+    countries=['GIN','LBR','SLE']
     cases = get_ebola_counts_by_country(countries,sources=['Situation report'])
 
     GIN_ebola_districts=['CONAKRY','GUECKEDOU','MACENTA','DABOLA','KISSIDOUGO','DINGUIRAYE','TELIMELE','BOFFA',
@@ -45,16 +45,18 @@ if __name__=='__main__':
 
     LBR_ebola_districts=['BOMI','BONG','GBARPOLU','GRAND BASSA','GRAND CAPE MOUNT','GRAND GEDEH','GRAND KRU','LOFA','MARGIBI','MARYLAND','MONTSERRADO','NIMBA','RIVER GEE','RIVERCESS','SINOE']
 
+    SLE_ebola_districts=['KAILAHUN','KENEMA','PORT LOKO','KAMBIA','BO','FREETOWN','WESTERN RURAL','KONO','KOINADUGU','TONKOLILI','BOMBALI','PUJEHUN','MOYAMBA','BONTHE']
+
     date_after=datetime(2014,12,1)
 
+    SLE_sitrep_cases=cases['SLE'].ix[date_after:].swaplevel(0,1,axis=1)['Situation report'][SLE_ebola_districts]
+    print(SLE_sitrep_cases)
+    SLE_sitrep_cases.to_csv('tmp_SLE_cases.csv')
+
     GIN_sitrep_cases=cases['GIN'].ix[date_after:].swaplevel(0,1,axis=1)['Situation report'][GIN_ebola_districts]
-
     print(GIN_sitrep_cases)
-
     GIN_sitrep_cases.to_csv('tmp_GIN_cases.csv')
 
     LBR_sitrep_cases=cases['LBR'].ix[date_after:].swaplevel(0,1,axis=1)['Situation report'][LBR_ebola_districts]
-
     print(LBR_sitrep_cases)
-
     LBR_sitrep_cases.to_csv('tmp_LBR_cases.csv')
