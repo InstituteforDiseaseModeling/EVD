@@ -1,7 +1,7 @@
 import os
 import json
 import shutil
-from COMPSJavaInterop import QueryCriteria,Simulation, SimulationFile, Client, Configuration
+from COMPSJavaInterop import QueryCriteria,Simulation, SimulationFile, Client, Configuration, Priority
 import time
 
 demog_filename='Ebola_Demographics.json'
@@ -27,6 +27,7 @@ shutil.copy(demog_filename,input_path)
 sim_root=os.path.join(setup.get('HPC','sim_root'),'ebola')
 bldr = Configuration.getBuilderInstance();
 config = bldr.setSimulationInputArgs(commandline.Options) \
+             .setPriority(Priority.valueOf('Highest')) \
              .setWorkingDirectoryRoot(sim_root) \
              .build()
 
