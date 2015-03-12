@@ -85,7 +85,7 @@ var Histogram = function(sets){
 
 	// convert 52 week numeric scale to months for x-axis labeling
 	allScales['timeScale'] = d3.time.scale()
-		.domain([new Date(2014, 2, 8), new Date(2015, 2, 7)])
+		.domain([new Date(2014, 2, 15), new Date(2015, 2, 14)])
 		.range([0, self.width - self.padding['xAxis'] - self.padding['rightEdge']])
 
 	//get x-and y-axis set up
