@@ -4,6 +4,7 @@ import datetime
 import struct
 import json
 import math
+import numpy as np
 
 iso_countries={'GIN':'guinee','SLE':'sierra_leone','LBR':'liberia',
                'NGA':'nigeria','SEN':'senegal','MLI':'mali',
@@ -49,7 +50,8 @@ additional_nodes={'Lagos':{'Latitude':6.583333,
                            'Longitude':-4.259,
                            'InitialPopulation':1750000}}
 
-resolution = 2.5/60   # 2.5 arcmin
+resolution = 0.25 # 1/4 degree
+#resolution = 2.5/60   # 2.5 arcmin
 #resolution = 30.0/3600 # 30 arcsec
 
 def iso_year_start(iso_year):
@@ -82,7 +84,8 @@ def get_all_counts():
     return all_counts
 
 def smooth(counts):
-    converted = counts.asfreq('D', method='bfill')
+    converted = counts.div(7).asfreq('D', method='bfill')
+    #print(converted[-10:])
     smoothed = pd.ewma(converted,span=21)
     return smoothed
 
@@ -90,7 +93,12 @@ def aggregate(smoothed):
     dfsum=smoothed.sum(axis=1)
     df=pd.DataFrame(dfsum,columns=['EbolaCases'])
     df['CumulativeEbolaCases']=dfsum.cumsum()
+    #print(df[-10:])
     return df
+
+def log_transform(counts):
+    transform=lambda x: np.log10(x) if x>0 else -5
+    return counts.applymap(transform)
 
 def write_inset_chart(channels):
     header={'DateTime':str(datetime.datetime.now()),
@@ -121,22 +129,30 @@ def get_nodes():
 
 if __name__ == '__main__':
     all_counts=get_all_counts()
-    all_counts=smooth(all_counts)
-    all_counts[all_counts<0.2]=0 # smoothing makes single cases somewhat < 1
-    channels=aggregate(all_counts)
+    smoothed=smooth(all_counts)
+    #smoothed[smoothed<0.2]=0 # smoothing makes single cases somewhat < 1
+    transformed=log_transform(smoothed)
+    shift=lambda x: float(x+1.2) if x>-1.2 else 0
+    transformed=transformed.applymap(shift)
+    #transformed.plot()
+    #plt.show()
+    #print(transformed)
+    channels=aggregate(smoothed)
     write_inset_chart(channels)
 
     node_names=all_counts.keys()
     n_nodes=len(node_names)
-    n_tstep=len(all_counts.index)
+    n_tstep=len(transformed.index)
     print('(n_nodes,n_tstep)=(%s,%s)'%(n_nodes,n_tstep))
     nodes=get_nodes()
     for name in node_names:
         node=nodes.get(name)
-        node.update({'data':all_counts[name].tolist(),
+        #print(name,transformed[name].tolist())
+        node.update({'data':transformed[name].tolist(),
                      'id':get_node_id(node['Latitude'],node['Longitude'])})
 
     nodeids=[n['id'] for n in nodes.values() if 'id' in n]
+    print(nodeids,len(nodeids),len(set(nodeids)))
 
     with open('SpatialReport_EbolaCases.bin','wb') as binfile:
         pack_header = struct.pack('ll',n_nodes,n_tstep)
