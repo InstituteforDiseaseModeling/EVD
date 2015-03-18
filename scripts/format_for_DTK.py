@@ -50,8 +50,8 @@ additional_nodes={'Lagos':{'Latitude':6.583333,
                            'Longitude':-4.259,
                            'InitialPopulation':1750000}}
 
-resolution = 0.25 # 1/4 degree
-#resolution = 2.5/60   # 2.5 arcmin
+#resolution = 0.25 # 1/4 degree
+resolution = 2.5/60   # 2.5 arcmin
 #resolution = 30.0/3600 # 30 arcsec
 
 def iso_year_start(iso_year):
