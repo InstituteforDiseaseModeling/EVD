@@ -9,11 +9,7 @@ def week_of_date(date_input):
     year = date_object.isocalendar()[0]
     if year == 2015:
         weekno = weekno + 52
-<<<<<<< HEAD
-    return weekno - 13 #shifting the ranges to Mar 2014 - Mar 2015
-=======
-    return weekno - 12 #shifting the ranges to Mar 2014 - Mar 2015
->>>>>>> origin/master
+    return weekno - 13 #shifting the ranges to Apr 2014 - Apr 2015
 
 def read_case_counts(csv_file):
     case_counts={}
