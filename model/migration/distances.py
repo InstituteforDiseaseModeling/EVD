@@ -14,7 +14,7 @@ exceptions={ 'Bonthe': 'Yagoi',
              'Grand Cape Mount': 'Robertsport',
              'River Cess': 'River Cess Town' }
 
-api_key='AIzaSyDswkJadwaVzGuSkJ8Z0gzBcEekqdn7Wi4'
+api_key='add your own API key here'
 
 if os.path.exists('known_locations.json'):
     with open('known_locations.json','r') as fknown:
